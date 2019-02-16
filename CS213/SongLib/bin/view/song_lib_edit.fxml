@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="559.0" prefWidth="396.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+                  <MenuItem mnemonicParsing="false" text="Main Menu" />
+                  <MenuItem fx:id="exit" onAction="#exit" mnemonicParsing="false" text="Exit" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem onAction="#doEditClear" mnemonicParsing="false" text="Clear Fields" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem mnemonicParsing="false" text="Help Contents" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <ButtonBar layoutX="70.0" layoutY="505.0" prefHeight="40.0" prefWidth="200.0">
+        <buttons>
+            <Button mnemonicParsing="false" prefHeight="74.0" text="Save" />
+            <Button fx:id="clear" onAction="#doEditClear" mnemonicParsing="false" prefHeight="64.0" text="Clear" />
+          <Button fx:id="cancel" onAction="#doCancel" mnemonicParsing="false" prefHeight="45.0" prefWidth="72.0" text="Cancel" />
+        </buttons>
+      </ButtonBar>
+      <Line endX="159.0" endY="-0.5" layoutX="209.0" layoutY="346.0" startX="29.0" startY="-0.5" stroke="#a4a4a4" />
+      <Line endX="221.0" layoutX="147.0" layoutY="488.0" startX="-124.9798355102539" stroke="#a4a4a4" />
+      <Line endX="-100.0" endY="108.5" layoutX="122.0" layoutY="379.0" startX="-100.0" startY="-33.5" stroke="#a4a4a4" />
+      <Line endX="-124.0" endY="-139.0" layoutX="492.0" layoutY="485.0" startX="-124.0" startY="2.5" stroke="#a4a4a4" />
+      <Line endX="160.5" endY="-0.5" layoutX="-1.0" layoutY="346.0" startX="23.5" startY="-0.5" stroke="#a4a4a4" />
+      <Label layoutX="169.0" layoutY="40.0" text="EDIT" />
+      <Label layoutX="172.0" layoutY="336.0" text="DETAILS" />
+      <Pane layoutX="163.0" layoutY="346.0" prefHeight="142.0" prefWidth="205.0">
+         <children>
+            <Text fx:id="edit_title_display" layoutX="6.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" />
+            <Text fx:id="edit_artist_display" layoutX="7.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" />
+            <Text fx:id="edit_album_display" layoutX="7.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" />
+            <Text fx:id="edit_year_display" layoutX="7.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" />
+         </children>
+      </Pane>
+      <Pane layoutX="22.0" layoutY="346.0" prefHeight="142.0" prefWidth="136.0">
+         <children>
+            <Text layoutX="45.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title" />
+            <Text layoutX="45.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Artist" />
+            <Text layoutX="45.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Album" />
+            <Text layoutX="45.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Year" />
+         </children>
+      </Pane>
+      <Pane layoutX="-6.0" layoutY="55.0" prefHeight="272.0" prefWidth="402.0">
+         <children>
+            <Pane layoutX="6.0" prefHeight="70.0" prefWidth="400.0">
+               <children>
+                  <TextField fx:id="edit_title" layoutX="22.0" layoutY="33.0" prefHeight="27.0" prefWidth="353.0" />
+                  <Label layoutX="22.0" layoutY="10.0" text="Song Title" />
+               </children>
+            </Pane>
+            <Pane layoutX="6.0" layoutY="70.0" prefHeight="70.0" prefWidth="400.0">
+               <children>
+                  <TextField fx:id="edit_artist"  layoutX="22.0" layoutY="33.0" prefHeight="27.0" prefWidth="353.0" />
+                  <Label layoutX="22.0" layoutY="10.0" text="Artist Name" />
+               </children>
+            </Pane>
+            <Pane layoutX="6.0" layoutY="140.0" prefHeight="70.0" prefWidth="400.0">
+               <children>
+                  <TextField fx:id="edit_album"  layoutX="22.0" layoutY="33.0" prefHeight="27.0" prefWidth="353.0" />
+                  <Label layoutX="22.0" layoutY="10.0" text="Album Title" />
+               </children>
+            </Pane>
+            <Pane layoutX="6.0" layoutY="210.0" prefHeight="70.0" prefWidth="400.0">
+               <children>
+                  <TextField fx:id="edit_year"  layoutX="22.0" layoutY="33.0" prefHeight="27.0" prefWidth="353.0" />
+                  <Label layoutX="22.0" layoutY="10.0" text="Release Year" />
+               </children>
+            </Pane>
+         </children></Pane>
+   </children>
+</AnchorPane>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane prefHeight="559.0" prefWidth="396.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+                  <MenuItem mnemonicParsing="false" text="Main Menu" />
+                  <MenuItem onAction="#exit" mnemonicParsing="false" text="Exit" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem onAction="#doAddClear" mnemonicParsing="false" text="Clear Fields" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem mnemonicParsing="false" text="Help Contents" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <ButtonBar fx:id="buttonBarAddEdit" layoutX="70.0" layoutY="505.0" prefHeight="40.0" prefWidth="200.0">
+        <buttons>
+            <Button fx:id="addSong" onAction="#addSong" mnemonicParsing="false" prefHeight="74.0" text="Add" />
+            <Button fx:id="clear" onAction="#doAddClear" mnemonicParsing="false" prefHeight="64.0" text="Clear" />
+          <Button fx:id="cancel" onAction="#doCancel" mnemonicParsing="false" prefHeight="45.0" prefWidth="72.0" text="Cancel" />
+        </buttons>
+      </ButtonBar>
+      <Label layoutX="160.0" layoutY="40.0" text="ADD SONG" />
+      <Pane layoutX="-6.0" layoutY="55.0" prefHeight="425.0" prefWidth="402.0">
+         <children>
+            <Pane layoutX="6.0" layoutY="30.0" prefHeight="70.0" prefWidth="400.0">
+               <children>
+                  <TextField fx:id="add_title" layoutX="22.0" layoutY="33.0" prefHeight="27.0" prefWidth="353.0" />
+                  <Label layoutX="22.0" layoutY="10.0" text="Song Title" />
+               </children>
+            </Pane>
+            <Pane layoutX="6.0" layoutY="130.0" prefHeight="70.0" prefWidth="400.0">
+               <children>
+                  <TextField fx:id="add_artist" layoutX="22.0" layoutY="33.0" prefHeight="27.0" prefWidth="353.0" />
+                  <Label layoutX="22.0" layoutY="10.0" text="Artist Name" />
+               </children>
+            </Pane>
+            <Pane layoutX="6.0" layoutY="230.0" prefHeight="70.0" prefWidth="400.0">
+               <children>
+                  <TextField fx:id="add_album" layoutX="22.0" layoutY="33.0" prefHeight="27.0" prefWidth="353.0" />
+                  <Label layoutX="22.0" layoutY="10.0" text="Album Title" />
+               </children>
+            </Pane>
+            <Pane layoutX="6.0" layoutY="330.0" prefHeight="70.0" prefWidth="400.0">
+               <children>
+                  <TextField fx:id="add_year" layoutX="22.0" layoutY="33.0" prefHeight="27.0" prefWidth="353.0" />
+                  <Label layoutX="22.0" layoutY="10.0" text="Release Year" />
+               </children>
+            </Pane>
+         </children></Pane>
+   </children>
+</AnchorPane>
