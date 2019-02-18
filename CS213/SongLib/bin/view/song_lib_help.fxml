@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--song_lib.fxml-->
+<!--Copyright (c) 2019 Gemuele Aludino, Patrick Nogaj.-->
+<!--All rights reserved.-->
+<!--Rutgers University: School of Arts and Sciences-->
+<!--01:198:213 Software Methodology, Spring 2019-->
+<!--Professor Seshadri Venugopal-->
+
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="559.0" prefWidth="396.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TextArea editable="false" layoutX="47.0" layoutY="50.0" prefHeight="135.0" prefWidth="300.0" text="Menu bar:   [left click] File &gt; Add Song to Playlist&#10;Button bar: [left click] the 'Add...' button&#10;&#10;'Song Title' and 'Artist Name' are mandatory. &#10;A song will not be added otherwise.&#10;&#10;Duplicate song entries are not permitted.&#10;Such entries are denoted by songs having &#10;identical Song Title and Artist Name fields.">
+         <font>
+            <Font size="11.0" />
+         </font>
+      </TextArea>
+      <TextArea editable="false" layoutX="46.0" layoutY="220.0" prefHeight="135.0" prefWidth="300.0" text="[left click] the song you want to edit,&#10;and do any of the following:&#10;&#10;[right click] &gt; Edit Selected Song&#10;Menu bar:   [left click] Edit &gt; Edit Selected Song&#10;Button bar: [left click] the 'Edit...' button&#10;&#10;'Song Title' and 'Artist Name' remain mandatory.&#10;As per 'Add Song', duplicate songs are not permitted.">
+         <font>
+            <Font size="11.0" />
+         </font>
+      </TextArea>
+      <TextArea editable="false" layoutX="48.0" layoutY="390.0" prefHeight="135.0" prefWidth="300.0" text="[left click] the song you want to delete,&#10;and do any of the following:&#10;&#10;[right click] &gt; Edit Selected Song&#10;Menu bar:   [left click] Edit &gt; Delete Selected Song&#10;Button bar: [left click] the 'Delete...' button&#10;&#10;You will be prompted to confirm your decision&#10;to delete the highlighted song.">
+         <font>
+            <Font size="11.0" />
+         </font>
+      </TextArea>
+      <Text layoutX="48.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ADD SONG" />
+      <Text layoutX="48.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="EDIT SONG" />
+      <Text layoutX="48.0" layoutY="386.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DELETE SONG" />
+   </children>
+</AnchorPane>

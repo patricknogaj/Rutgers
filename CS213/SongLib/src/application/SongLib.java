@@ -1,7 +1,7 @@
 /**
  * SongLib.java
  *
- * Copyright © 2019 Gemuele Aludino, Patrick Nogaj. 
+ * Copyright (c) 2019 Gemuele Aludino, Patrick Nogaj. 
  * All rights reserved.
  *
  * Rutgers University: School of Arts and Sciences
@@ -11,46 +11,51 @@
 
 package application;
 
-import controller.SongLibraryController;
+import java.io.IOException;
+
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
-import model.SongLibraryModel;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
+import controller.SongLibraryController;
+
 public class SongLib extends Application {
-	
+
+	SongLibraryController controller = new SongLibraryController();
+
 	@Override
 	public void start(Stage primaryStage) {
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			SongLibraryController controller = new SongLibraryController();
+
 			loader.setLocation(getClass().getResource("/view/song_lib.fxml"));
 			loader.setController(controller);
+
 			Parent root = loader.load();
 			Scene scene = new Scene(root);
 			primaryStage.setScene(scene);
 
-			// Set properties of stage
 			primaryStage.setTitle("Song Library");
 			primaryStage.setResizable(false);
-			
+
 			primaryStage.show();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void main(String[] args) {
 		launch(args);
 	}
-	
+
 	@Override
 	public void stop() {
-		SongLibraryModel model = new SongLibraryModel();
-		model.writeToFile();
-		Platform.exit();
+		try {
+			controller.exit();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

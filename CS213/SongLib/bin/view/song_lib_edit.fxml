@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!--song_lib_edit.fxml-->
+<!--Copyright (c) 2019 Gemuele Aludino, Patrick Nogaj.-->
+<!--All rights reserved.-->
+
+<!--Rutgers University: School of Arts and Sciences-->
+<!--01:198:213 Software Methodology, Spring 2019-->
+<!--Professor Seshadri Venugopal-->
+
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
@@ -12,13 +20,13 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="559.0" prefWidth="396.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="x" prefHeight="559.0" prefWidth="396.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-                  <MenuItem mnemonicParsing="false" text="Main Menu" />
+                  <MenuItem onAction="#doMainMenu" mnemonicParsing="false" text="Main Menu" />
                   <MenuItem fx:id="exit" onAction="#exit" mnemonicParsing="false" text="Exit" />
             </items>
           </Menu>
@@ -29,15 +37,15 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-              <MenuItem mnemonicParsing="false" text="Help Contents" />
+              <MenuItem onAction="#about" mnemonicParsing="false" text="About" />
+              <MenuItem onAction="#help" mnemonicParsing="false" text="Help Contents" />
             </items>
           </Menu>
         </menus>
       </MenuBar>
       <ButtonBar layoutX="70.0" layoutY="505.0" prefHeight="40.0" prefWidth="200.0">
         <buttons>
-            <Button mnemonicParsing="false" prefHeight="74.0" text="Save" />
+            <Button fx:id="save" onAction="#doSave" mnemonicParsing="false" prefHeight="74.0" text="Save" />
             <Button fx:id="clear" onAction="#doEditClear" mnemonicParsing="false" prefHeight="64.0" text="Clear" />
           <Button fx:id="cancel" onAction="#doCancel" mnemonicParsing="false" prefHeight="45.0" prefWidth="72.0" text="Cancel" />
         </buttons>
@@ -51,10 +59,10 @@
       <Label layoutX="172.0" layoutY="336.0" text="DETAILS" />
       <Pane layoutX="163.0" layoutY="346.0" prefHeight="142.0" prefWidth="205.0">
          <children>
-            <Text fx:id="edit_title_display" layoutX="6.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" />
+            <Text fx:id="edit_title_display" layoutX="7.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" />
             <Text fx:id="edit_artist_display" layoutX="7.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" />
-            <Text fx:id="edit_album_display" layoutX="7.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" />
-            <Text fx:id="edit_year_display" layoutX="7.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" />
+            <Text fx:id="edit_year_display" layoutX="7.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" />
+            <Text fx:id="edit_album_display" layoutX="7.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" />
          </children>
       </Pane>
       <Pane layoutX="22.0" layoutY="346.0" prefHeight="142.0" prefWidth="136.0">

@@ -1,0 +1,73 @@
+[SONG_LIST]
+
+	[SONG_ELE]
+		Title: A Decade Under The Influence
+		Artist: Taking Back Sunday
+		Album: Where You Want To Be
+		Year: 2004
+	[\SONG_ELE]
+
+	[SONG_ELE]
+		Title: Bottom of a Bottle
+		Artist: Smile Empty Soul
+		Album: Smile Empty Soul
+		Year: 2003
+	[\SONG_ELE]
+
+	[SONG_ELE]
+		Title: Curses
+		Artist: Bullet For My Valentine
+		Album: Bullet For My Valentine
+		Year: 2004
+	[\SONG_ELE]
+
+	[SONG_ELE]
+		Title: Doin' Time
+		Artist: Sublime
+		Album: Sublime
+		Year: 1996
+	[\SONG_ELE]
+
+	[SONG_ELE]
+		Title: Feed Them to the Pigs
+		Artist: Parkway Drive
+		Album: Horizons
+		Year: 2007
+	[\SONG_ELE]
+
+	[SONG_ELE]
+		Title: Horizons
+		Artist: Parkway Drive
+		Album: Horizons
+		Year: 2007
+	[\SONG_ELE]
+
+	[SONG_ELE]
+		Title: Prescription/Oxymoron
+		Artist: ScHoolboy Q
+		Album: Oxymoron (Deluxe Version)
+		Year: 2014
+	[\SONG_ELE]
+
+	[SONG_ELE]
+		Title: Smile In Your Sleep
+		Artist: Silverstein
+		Album: Discvering The Waterfront
+		Year: 2005
+	[\SONG_ELE]
+
+	[SONG_ELE]
+		Title: The Rock Show
+		Artist: Blink 182
+		Album: Take Off Your Pants and Jacket
+		Year: 2001
+	[\SONG_ELE]
+
+	[SONG_ELE]
+		Title: Writing On The Walls
+		Artist: underOATH
+		Album: Define The Great Line
+		Year: 2006
+	[\SONG_ELE]
+
+[/SONG_LIST]

@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!--song_lib_add.fxml-->
+<!--Copyright (c) 2019 Gemuele Aludino, Patrick Nogaj.-->
+<!--All rights reserved.-->
+
+<!--Rutgers University: School of Arts and Sciences-->
+<!--01:198:213 Software Methodology, Spring 2019-->
+<!--Professor Seshadri Venugopal-->
+
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
@@ -10,13 +18,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane prefHeight="559.0" prefWidth="396.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="x" prefHeight="559.0" prefWidth="396.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-                  <MenuItem mnemonicParsing="false" text="Main Menu" />
+                  <MenuItem onAction="#doMainMenu" mnemonicParsing="false" text="Main Menu" />
                   <MenuItem onAction="#exit" mnemonicParsing="false" text="Exit" />
             </items>
           </Menu>
@@ -27,8 +35,8 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-              <MenuItem mnemonicParsing="false" text="Help Contents" />
+              <MenuItem onAction="#about" mnemonicParsing="false" text="About" />
+              <MenuItem onAction="#help" mnemonicParsing="false" text="Help Contents" />
             </items>
           </Menu>
         </menus>
