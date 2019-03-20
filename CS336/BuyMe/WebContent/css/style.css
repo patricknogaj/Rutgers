@@ -1,0 +1,393 @@
+@charset "ISO-8859-1";
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+@import url('https://fonts.googleapis.com/css?family=Work+Sans:300,600');
+
+
+html, body {
+	margin: 0;
+	padding: 0;
+	border: 0;
+    font-weight: normal;
+   font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;      
+    
+}
+
+div {
+    display: block;
+}
+
+div.header-container {
+    width: 100%;
+    top: 0px;
+    position: absolute;
+    background-color: #000000;
+    height: 45px;
+}
+
+div.TopMenu {
+	align: center;
+	margin-bottom: 20px;
+	padding: 10px 0;
+	width: 60%;
+	margin: 0 auto;
+	color: white;
+	font-size: 12px;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+div.subheader {
+	top: 45px;
+	position: relative;
+	width: 60%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+div.content {
+	top: 45px;
+	bottom: 0px;
+	position: relative;
+	width: 60%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+div.footer {
+	bottom: 0px;
+	position: absolute;
+	width: 60%;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+ul {
+	display: inline-block;
+    vertical-align: middle;
+}
+
+ul.social {
+	width: 50%;
+	float: left;
+	padding: 0;
+	margin: 0;
+}
+
+ul.Links {
+	width: 50%;
+	float: right;
+	padding: 0;
+	margin: 0;
+	text-align: right;
+}
+
+li {
+	display: inline;
+}
+
+li.links {
+	margin-left: 4.6em;
+}
+
+li.datetime {
+	text-align: right;
+	display: inline;
+}
+
+ul {
+    display: block;
+    list-style: none;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+}
+
+.well {
+  min-height: 20px;
+  padding: 19px;
+  margin-bottom: 20px;
+  background-color: #f5f5f5;
+  border: 1px solid #e3e3e3;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+.well blockquote {
+  border-color: #ddd;
+  border-color: rgba(0, 0, 0, .15);
+}
+.well-lg {
+  padding: 24px;
+  border-radius: 6px;
+}
+.well-sm {
+  padding: 9px;
+  border-radius: 3px;
+}
+
+.container {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.grid {
+    font-size: 0;
+    list-style: none;
+    margin-bottom: 0;
+    margin-left: -20px;
+}
+
+.grid_item {
+    display: inline-block;
+    font-size: 14px;
+    padding-left: 20px;
+    vertical-align: top;
+    width: 100%;
+}
+
+.btn.alt {
+    background-color: transparent;
+    border: 3px solid #333;
+    color: #333;
+}
+
+.btn.alt {
+    line-height: 29px;
+}
+
+.btn {
+    cursor: pointer;
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    text-align: center;
+    text-transform: uppercase;
+    border: none;
+    font-family: 'Lato', sans-serif;
+    font-size: 11px;
+    font-weight: normal;
+    height: 35px;
+    line-height: 35px;
+    letter-spacing: 1px;
+    padding: 0 1.2em;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    vertical-align: middle;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.create_acc {
+	float: left;
+	width: 45%;
+}
+
+.sign_in {
+	float: right;	
+	width: 50%;
+	top: 0px;
+}
+
+.sign1 {
+	width: 30%;
+	
+}
+
+.sign2 {
+	width: 30%;
+	
+}
+
+.pg_login {
+	height: 266px;
+}
+
+input {
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 40%;
+  border: 0;
+  margin: 0 0 3px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+/*form styles*/
+#msform {
+	width: 50%;
+	margin: 50px auto;
+	text-align: center;
+	position: relative;
+}
+#msform fieldset {
+	background: white;
+	border: 0 none;
+	border-radius: 3px;
+
+	padding: 20px 30px;
+	box-sizing: border-box;
+	width: 80%;
+	margin: 0 10%;
+	
+	/*stacking fieldsets above each other*/
+	position: relative;
+}
+/*Hide all except first fieldset*/
+#msform fieldset:not(:first-of-type) {
+	display: none;
+}
+/*inputs*/
+#msform input, #msform textarea {
+	padding: 15px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	margin-bottom: 10px;
+	width: 40%;
+	box-sizing: border-box;
+	font-family: montserrat;
+	color: #2C3E50;
+	font-size: 13px;
+}
+/*buttons*/
+#msform .action-button {
+	width: 100px;
+	background: #e00404;
+	font-weight: bold;
+	color: white;
+	border: 0 none;
+	border-radius: 1px;
+	cursor: pointer;
+	padding: 10px 5px;
+	margin: 10px 5px;
+}
+#msform .action-button:hover, #msform .action-button:focus {
+	box-shadow: 0 0 0 2px white, 0 0 0 3px #e00404;
+}
+/*headings*/
+.fs-title {
+	font-size: 15px;
+	text-transform: uppercase;
+	color: #2C3E50;
+	margin-bottom: 10px;
+}
+.fs-subtitle {
+	font-weight: normal;
+	font-size: 13px;
+	color: #666;
+	margin-bottom: 20px;
+}
+/*progressbar*/
+#progressbar {
+	margin-bottom: 30px;
+	overflow: hidden;
+	/*CSS counters to number the steps*/
+	counter-reset: step;
+}
+#progressbar li {
+	list-style-type: none;
+	color: #000000;
+	text-transform: uppercase;
+	font-size: 9px;
+	width: 33.33%;
+	float: left;
+	position: relative;
+}
+#progressbar li:before {
+	content: counter(step);
+	counter-increment: step;
+	width: 20px;
+	line-height: 20px;
+	display: block;
+	font-size: 10px;
+	color: #333;
+	background: white;
+	border-radius: 3px;
+	margin: 0 auto 5px auto;
+}
+/*progressbar connectors*/
+#progressbar li:after {
+	content: '';
+	width: 100%;
+	height: 2px;
+	background: white;
+	position: absolute;
+	left: -50%;
+	top: 9px;
+	z-index: -1; /*put it behind the numbers*/
+}
+#progressbar li:first-child:after {
+	/*connector not needed before the first step*/
+	content: none; 
+}
+/*marking active/completed steps green*/
+/*The number of the step and the connector before it = green*/
+#progressbar li.active:before,  #progressbar li.active:after{
+	background: #e00404;
+	color: white;
+}
+
+#regForm {
+  background-color: #ffffff;
+  margin: 100px auto;
+  padding: 40px;
+  width: 70%;
+  min-width: 300px;
+}
+
+/* Style the input fields */
+input {
+  padding: 10px;
+  width: 40%;
+  font-size: 17px;
+  font-family: Raleway;
+  border: 1px solid #aaaaaa;
+}
+
+/* Mark input boxes that gets an error on validation: */
+input.invalid {
+  background-color: #ffdddd;
+}
+
+/* Hide all steps by default: */
+.tab {
+  display: none;
+}
+
+/* Make circles that indicate the steps of the form: */
+.step {
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbbbbb;
+  border: none; 
+  border-radius: 50%;
+  display: inline-block;
+  opacity: 0.5;
+}
+
+/* Mark the active step: */
+.step.active {
+  opacity: 1;
+}
+
+/* Mark the steps that are finished and valid: */
+.step.finish {
+  background-color: #4CAF50;
+}
+
+
+
+
