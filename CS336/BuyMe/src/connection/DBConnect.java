@@ -12,9 +12,9 @@ import java.sql.SQLException;
 
 public class DBConnect {
 
-	private final String DB_URL = "jdbc:mysql://cs336buyme.cnnvlun9z7yl.us-east-2.rds.amazonaws.com:3306/login_test";
-	private final String DB_USER = "cs336buyme";
-	private final String DB_PASS = "Rutgers123";
+	private final String DB_URL = "jdbc:mysql://URL_TO_DB";
+	private final String DB_USER = "USER";
+	private final String DB_PASS = "PASS";
 	
 	public DBConnect() {
 		
