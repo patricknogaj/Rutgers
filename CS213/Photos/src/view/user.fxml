@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--user.fxml-->
+<!--Copyright (c) 2019 Gemuele Aludino, Patrick Nogaj.-->
+<!--All rights reserved.-->
+<!--Rutgers University: School of Arts and Sciences-->
+<!--01:198:213 Software Methodology, Spring 2019-->
+<!--Professor Seshadri Venugopal-->
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UserController">
+   <children>
+      <MenuBar layoutY="1.0" prefHeight="29.0" prefWidth="1280.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem fx:id="fileCreateNewAlbum" mnemonicParsing="false" onAction="#doAddAlbum" text="Create New Album" />
+                  <MenuItem fx:id="fileImportImagesSelectedAlbum" mnemonicParsing="false" onAction="#importPhoto" text="Import Images Into Selected Album" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem fx:id="fileOpenSelectedPhotoInViewer" mnemonicParsing="false" onAction="#doOpenSelectedPhotoInViewer" text="Open Selected Photo in Viewer" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem fx:id="fileItem" mnemonicParsing="false" onAction="#doLogOff" text="Save &amp; Logout" />
+                  <MenuItem fx:id="fileSaveAndExit" mnemonicParsing="false" onAction="#doQuit" text="Save &amp; Exit Photos" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="View">
+            <items>
+              <MenuItem fx:id="viewAsThumbnails" mnemonicParsing="false" onAction="#doViewModeThumbnail" text="As Thumbnails" />
+                  <MenuItem fx:id="viewAsSingleImage" mnemonicParsing="false" onAction="#doViewModeSingleImage" text="As Single Image" />
+            </items>
+          </Menu>
+            <Menu fx:id="menuSearch" mnemonicParsing="false" text="Search">
+               <items>
+                  <MenuItem fx:id="searchAllAlbums" mnemonicParsing="false" onAction="#doSearchAllAlbums" text="All Albums" />
+                  <MenuItem fx:id="searchCurrentAlbum" mnemonicParsing="false" onAction="#doSearchCurrentAlbum" text="Current Album" />
+                  <Menu fx:id="menuAlbums" mnemonicParsing="false" onAction="#doMenuAlbums" text="Album..." />
+               </items>
+            </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem fx:id="menuItemHelp" mnemonicParsing="false" onAction="#doHelp" text="Help" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem fx:id="menuItemAboutPhotos" mnemonicParsing="false" onAction="#doAbout" text="About Photos" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <AnchorPane layoutY="29.0" prefHeight="646.0" prefWidth="330.0">
+         <children>
+            <AnchorPane prefHeight="57.0" prefWidth="334.0">
+               <children>
+                  <AnchorPane prefHeight="42.0" prefWidth="313.0">
+                     <children>
+                        <Pane layoutY="5.0" prefHeight="55.0" prefWidth="169.0">
+                           <children>
+                              <Label layoutX="27.0" layoutY="15.0" prefHeight="26.0" prefWidth="88.0" text="ALBUMS" textFill="#aeaeae">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Pane layoutX="165.0" layoutY="5.0" prefHeight="55.0" prefWidth="169.0">
+                           <children>
+                              <Hyperlink id="addAlbumHL" fx:id="addAlbumHL" layoutX="44.0" layoutY="17.0" onAction="#doAddAlbum" text="New Album...." />
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+               </children></AnchorPane>
+            <AnchorPane layoutY="61.0" prefHeight="585.0" prefWidth="334.0">
+               <children>
+                  <ListView fx:id="albumView" layoutX="22.0" onMouseClicked="#doSelectAlbum" prefHeight="585.0" prefWidth="308.0">
+                     <contextMenu>
+                        <ContextMenu>
+                          <items>
+                            <MenuItem mnemonicParsing="false" onAction="#doAddAlbum" text="Add Album" />
+                              <MenuItem mnemonicParsing="false" onAction="#doDeleteAlbum" text="Delete Album" />
+                              <MenuItem mnemonicParsing="false" onAction="#doEditAlbum" text="Rename Album" />
+                          </items>
+                        </ContextMenu>
+                     </contextMenu></ListView>
+               </children></AnchorPane>
+         </children></AnchorPane>
+      <AnchorPane layoutX="335.0" layoutY="29.0" prefHeight="646.0" prefWidth="617.0">
+         <children>
+            <AnchorPane layoutY="7.0" prefHeight="578.0" prefWidth="527.0">
+               <children>
+                  <AnchorPane layoutY="-2.0" prefHeight="57.0" prefWidth="618.0">
+                     <children>
+                        <Label fx:id="albumHeader" layoutY="16.0" prefHeight="26.0" prefWidth="220.0" text="(select album to begin)" textFill="#aeaeae">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                     </children></AnchorPane>
+                  <AnchorPane layoutY="55.0" prefHeight="523.0" prefWidth="428.0">
+                     <children>
+                        <ScrollPane hbarPolicy="NEVER" prefHeight="523.0" prefWidth="618.0">
+                           <content>
+                              <TilePane fx:id="tilePaneImages" prefHeight="521.0" prefWidth="618.0" />
+                           </content>
+                           <contextMenu>
+                              <ContextMenu>
+                                <items>
+                                    <MenuItem mnemonicParsing="false" onAction="#deletePhoto" text="Delete Selected Photo from this Album" />
+                                    <SeparatorMenuItem mnemonicParsing="false" />
+                                    <MenuItem mnemonicParsing="false" text="Open Photo in Viewer" />
+                                </items>
+                              </ContextMenu>
+                           </contextMenu>
+                        </ScrollPane>
+                        <Hyperlink fx:id="addHL" layoutX="448.0" onAction="#importPhoto" text="Add Photo to This Album..." />
+                     </children>
+                  </AnchorPane>
+               </children></AnchorPane>
+            <AnchorPane layoutY="583.0" prefHeight="63.0" prefWidth="617.0">
+               <children>
+                  <Pane layoutX="-1.0" prefHeight="79.0" prefWidth="308.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="29.0" layoutX="26.0" layoutY="41.0" stroke="#dadada" strokeLineJoin="BEVEL" strokeType="INSIDE" width="238.0" />
+                        <ButtonBar layoutX="16.0" layoutY="41.0" prefHeight="29.0" prefWidth="238.0">
+                          <buttons>
+                              <RadioButton fx:id="radioButtonThumbnail" mnemonicParsing="false" onAction="#doViewModeThumbnail" text="Thumbnail" />
+                              <RadioButton fx:id="RadioButtonSingleImage" mnemonicParsing="false" onAction="#doViewModeSingleImage" text="Single Image" />
+                          </buttons>
+                        </ButtonBar>
+                        <Label layoutX="108.0" layoutY="14.0" text="VIEW MODE" textFill="#aeaeae" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="307.0" prefHeight="74.0" prefWidth="155.0">
+                     <children>
+                        <Slider fx:id="zoomSlider" layoutX="14.0" layoutY="44.0" max="2.0" min="0.25" onMousePressed="#doZoomSlider" showTickLabels="true" showTickMarks="true" />
+                        <Label layoutX="57.0" layoutY="14.0" text="ZOOM" textFill="#aeaeae" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="462.0" prefHeight="74.0" prefWidth="155.0">
+                     <children>
+                        <Label layoutX="40.0" layoutY="14.0" text="NAVIGATOR" textFill="#aeaeae" />
+                        <Button fx:id="navigatorButtonBack" layoutX="16.0" layoutY="37.0" mnemonicParsing="false" onAction="#doNavigatorButtonBack" text="Back" />
+                        <Button fx:id="navigatorButtonNext" layoutX="92.0" layoutY="37.0" mnemonicParsing="false" onAction="#doNavigatorButtonNext" text="Next" />
+                     </children></Pane>
+               </children></AnchorPane>
+         </children></AnchorPane>
+      <AnchorPane layoutX="951.0" layoutY="29.0" prefHeight="662.0" prefWidth="334.0">
+         <children>
+            <AnchorPane prefHeight="551.0" prefWidth="322.0">
+               <children>
+                  <AnchorPane prefHeight="60.0" prefWidth="318.0">
+                     <children>
+                        <Pane layoutX="-5.0" layoutY="2.0" prefHeight="55.0" prefWidth="169.0">
+                           <children>
+                              <Label layoutX="27.0" layoutY="15.0" prefHeight="26.0" prefWidth="88.0" text="DETAILS" textFill="#aeaeae">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Pane layoutX="160.0" layoutY="2.0" prefHeight="55.0" prefWidth="169.0" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutY="60.0" prefHeight="491.0" prefWidth="329.0">
+                     <children>
+                        <Pane layoutX="18.0" layoutY="14.0" prefHeight="207.0" prefWidth="295.0">
+                           <children>
+                              <ImageView fx:id="detailView" fitHeight="150.0" fitWidth="200.0" layoutX="48.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true" />
+                              <Label fx:id="displayCaption" alignment="CENTER" layoutX="134.0" layoutY="179.0" text="">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Pane layoutX="18.0" layoutY="221.0" prefHeight="255.0" prefWidth="295.0">
+                           <children>
+                              <Pane layoutX="2.0" layoutY="1.0" prefHeight="195.0" prefWidth="295.0">
+                                 <children>
+                                    <Label layoutX="16.0" layoutY="14.0" text="ADD/EDIT CAPTION" textFill="#aeaeae">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="16.0" layoutY="101.0" text="TAGS" textFill="#aeaeae">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="captionField" layoutX="16.0" layoutY="28.0" prefHeight="18.0" prefWidth="192.0" />
+                                    <Button fx:id="buttonAddCaption" layoutX="214.0" layoutY="28.0" mnemonicParsing="false" onAction="#setCaption" prefHeight="0.0" prefWidth="67.0" text="Confirm" />
+                                    <Label layoutX="16.0" layoutY="58.0" text="ADD TAG (key, value)" textFill="#aeaeae">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="tagName" layoutX="16.0" layoutY="72.0" prefHeight="27.0" prefWidth="96.0" />
+                                    <Button fx:id="buttonAddTag" layoutX="214.0" layoutY="72.0" mnemonicParsing="false" onAction="#createTag" prefHeight="0.0" prefWidth="67.0" text="Confirm" />
+                                    <TextField fx:id="tagValue" layoutX="115.0" layoutY="72.0" prefHeight="27.0" prefWidth="96.0" />
+                                    <ListView fx:id="tagList" layoutX="19.0" layoutY="117.0" prefHeight="74.0" prefWidth="261.0">
+                                       <contextMenu>
+                                          <ContextMenu>
+                                            <items>
+                                              <MenuItem mnemonicParsing="false" onAction="#removeTag" text="Remove Tag" />
+                                            </items>
+                                          </ContextMenu>
+                                       </contextMenu></ListView>
+                                 </children>
+                              </Pane>
+                              <Pane layoutX="2.0" layoutY="195.0" prefHeight="60.0" prefWidth="295.0">
+                                 <children>
+                                    <Label layoutX="43.0" layoutY="45.0" text="SIZE" textFill="#aeaeae">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="17.0" layoutY="30.0" prefWidth="51.0" text="CREATED" textFill="#aeaeae">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="sizeField" layoutX="81.0" layoutY="45.0" prefHeight="14.0" prefWidth="200.0" text="(no image selected)">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="createdField" layoutX="81.0" layoutY="30.0" prefHeight="14.0" prefWidth="200.0" text="(no image selected)">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="35.0" prefHeight="14.0" prefWidth="40.0" text="NAME" textFill="#aeaeae">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="nameField" layoutX="81.0" prefHeight="14.0" prefWidth="200.0" text="(no image selected)">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="38.0" layoutY="15.0" prefHeight="14.0" prefWidth="30.0" text="PATH" textFill="#aeaeae">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="pathField" layoutX="81.0" layoutY="15.0" prefHeight="14.0" prefWidth="200.0" text="(no image selected)">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Pane>
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+               </children></AnchorPane>
+            <AnchorPane layoutY="549.0" prefHeight="115.0" prefWidth="321.0">
+               <children>
+                  <ButtonBar layoutX="36.0" layoutY="84.0" prefHeight="29.0" prefWidth="244.0" />
+                  <Label layoutX="77.0" layoutY="7.0" text="IMAGE FILE MANAGEMENT" textFill="#aeaeae">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Label>
+                  <CheckBox fx:id="checkBoxPromptBeforeDelete" layoutX="63.0" layoutY="35.0" mnemonicParsing="false" text="Prompt before delete" />
+                <Button fx:id="buttonCopyPhoto" layoutX="40.0" layoutY="73.0" mnemonicParsing="false" onAction="#openCopyPhoto" prefHeight="17.0" prefWidth="54.0" text="Copy">
+                     <tooltip>
+                        <Tooltip text="Makes a duplicate of this Photo and moves the duplicate to another Album." />
+                     </tooltip>
+                  </Button>
+                  <Button fx:id="buttonMovePhoto" layoutX="120.0" layoutY="73.0" mnemonicParsing="false" onAction="#openMovePhoto" text="Move">
+                     <tooltip>
+                        <Tooltip text="Relocates this Photo from this Album to another Album." />
+                     </tooltip>
+                  </Button>
+                  <Button fx:id="buttonDeletePhoto" layoutX="200.0" layoutY="73.0" mnemonicParsing="false" onAction="#deletePhoto" text="Delete">
+                     <tooltip>
+                        <Tooltip text="Removes this Photo from this Album." />
+                     </tooltip>
+                  </Button>
+               </children>
+            </AnchorPane>
+         </children></AnchorPane>
+      <HBox layoutY="691.0" prefHeight="29.0" prefWidth="1280.0">
+         <children>
+            <Pane prefHeight="29.0" prefWidth="426.0" />
+            <Pane prefHeight="29.0" prefWidth="426.0">
+               <children>
+                  <Label fx:id="infoData" layoutX="103.0" layoutY="8.0" text="" textFill="#a4a4a4">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane prefHeight="29.0" prefWidth="428.0" />
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

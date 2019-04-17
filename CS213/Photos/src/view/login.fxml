@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--login.fxml-->
+<!--Copyright (c) 2019 Gemuele Aludino, Patrick Nogaj.-->
+<!--All rights reserved.-->
+<!--Rutgers University: School of Arts and Sciences-->
+<!--01:198:213 Software Methodology, Spring 2019-->
+<!--Professor Seshadri Venugopal-->
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="anchorPaneMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#keyPressed" prefHeight="515.0" prefWidth="335.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
+   <children>
+      <ImageView fx:id="imageViewBackground" fitHeight="528.0" fitWidth="349.0" layoutX="-7.0" layoutY="-7.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../data/imgs/Landscapes043-copy-1024x666-nlx1k6yqpkwi6ocd88yuh3p72z2yk1uia25ixyuwj4.jpg" />
+         </image>
+      </ImageView>
+      <Pane fx:id="paneUpper" prefHeight="274.0" prefWidth="343.0">
+         <children>
+            <ImageView fitHeight="187.0" fitWidth="218.0" layoutX="63.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/imgs/aaa.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane fx:id="paneLower" layoutY="272.0" prefHeight="243.0" prefWidth="343.0">
+         <children>
+            <Text fx:id="textUsername" fill="#615f5f" layoutX="35.0" layoutY="94.0" stroke="#030303" strokeType="INSIDE" strokeWidth="2.0" text="Username:" />
+            <Button fx:id="buttonLogin" blendMode="SCREEN" layoutX="146.0" layoutY="182.0" mnemonicParsing="false" onAction="#doLogin" text="Login" />
+            <Text fx:id="textPassword" fill="#615f5f" layoutX="35.0" layoutY="135.0" stroke="#030303" strokeType="INSIDE" strokeWidth="2.0" text="Password:" />
+            <TextField fx:id="textFieldUsername" layoutX="110.0" layoutY="76.0" opacity="0.5" prefHeight="26.0" prefWidth="198.0" style="-fx-background-color: #FFFFFF;" />
+            <PasswordField fx:id="textFieldPassword" layoutX="110.0" layoutY="117.0" opacity="0.5" prefHeight="26.0" prefWidth="198.0" style="-fx-background-color: #FFFFFF;" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--admin.fxml-->
+<!--Copyright (c) 2019 Gemuele Aludino, Patrick Nogaj.-->
+<!--All rights reserved.-->
+<!--Rutgers University: School of Arts and Sciences-->
+<!--01:198:213 Software Methodology, Spring 2019-->
+<!--Professor Seshadri Venugopal-->
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="anchorPaneAdmin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AdminController">
+   <children>
+      <Pane fx:id="paneUpper" prefHeight="193.0" prefWidth="500.0">
+         <children>
+            <Pane fx:id="paneAddUser" layoutX="88.0" layoutY="23.0" prefHeight="163.0" prefWidth="324.0">
+               <children>
+                  <TextField fx:id="textFieldPassword" layoutX="131.0" layoutY="70.0" />
+                  <TextField fx:id="textFieldUsername" layoutX="131.0" layoutY="36.0" />
+                  <Button fx:id="buttonConfirmAdd" layoutX="114.0" layoutY="109.0" mnemonicParsing="false" onAction="#doAdd" text="Confirm Add" />
+                  <Text fx:id="textUsername" layoutX="50.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username:" />
+                  <Text fx:id="textPassword" layoutX="51.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" />
+                  <Text fx:id="textAddNewUser" fill="#797979" layoutX="31.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ADD NEW USER" />
+                  <Line endX="88.0" layoutX="224.0" layoutY="14.0" startX="-89.038330078125" stroke="#787878" />
+                  <Line endX="-100.0" endY="137.0" layoutX="412.0" layoutY="15.0" startX="-100.0" stroke="#787878" />
+                  <Line endX="-99.0" endY="137.5" layoutX="411.0" layoutY="15.0" startX="-399.0" startY="136.58578491210938" stroke="#787878" />
+                  <Line endX="-400.0" endY="36.49999237060547" layoutX="412.0" layoutY="-22.0" startX="-400.0" startY="173.08578491210938" stroke="#787878" />
+                  <Line endX="-65.19999694824219" layoutX="94.0" layoutY="14.0" startX="-81.99999237060547" startY="-1.52587890625E-5" stroke="#787878" />
+               </children>
+            </Pane>
+            <MenuBar prefHeight="22.0" prefWidth="530.0">
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                        <MenuItem onAction="#doLogOff" mnemonicParsing="false" text="Logoff" />
+                    <MenuItem onAction="#doQuit" mnemonicParsing="false" text="Close" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Delete" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                    <MenuItem onAction="#doAbout" mnemonicParsing="false" text="About" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+         </children>
+      </Pane>
+      <Pane fx:id="paneTableView" layoutY="200.0" prefHeight="318.0" prefWidth="500.0">
+         <children>
+            <Text fx:id="textActiveUserView" fill="#797979" layoutX="194.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ACTIVE USER VIEW" />
+            <TableView fx:id="tableViewUsers" layoutY="40.0" prefHeight="202.0" prefWidth="500.0">
+              <columns>
+                <TableColumn fx:id="userColumn" prefWidth="250.0" text="Username" />
+                <TableColumn fx:id="passwordColumn" prefWidth="250.0" text="Password" />
+              </columns>
+            </TableView>
+            <ButtonBar fx:id="buttonBarUserView" layoutX="68.0" layoutY="255.0" prefHeight="40.0" prefWidth="344.0">
+              <buttons>
+                  <Button fx:id="buttonEditUser" mnemonicParsing="false" text="Edit Selected User" />
+                  <Button fx:id="buttonDeleteUser" mnemonicParsing="false" onAction="#doDelete" text="Delete Selected User" />
+              </buttons>
+            </ButtonBar>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--move_photo.fxml-->
+<!--Copyright (c) 2019 Gemuele Aludino, Patrick Nogaj.-->
+<!--All rights reserved.-->
+<!--Rutgers University: School of Arts and Sciences-->
+<!--01:198:213 Software Methodology, Spring 2019-->
+<!--Professor Seshadri Venugopal-->
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="197.0" prefWidth="552.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Text layoutX="141.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Album Name:" />
+      <Text layoutX="212.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 24; -fx-font-weight: bold;" text="Move Photo" wrappingWidth="181.48828125" />
+      <Text layoutX="141.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="To move a photo, select an album to move to." />
+      <Button fx:id="movePhoto" layoutX="249.0" layoutY="151.0" mnemonicParsing="false" onAction="#movePhoto" text="Copy" />
+      <ChoiceBox fx:id="albumPicker" layoutX="222.0" layoutY="113.0" prefHeight="28.0" prefWidth="189.0" />
+   </children>
+</AnchorPane>

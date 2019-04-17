@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--import.fxml-->
+<!--Copyright (c) 2019 Gemuele Aludino, Patrick Nogaj.-->
+<!--All rights reserved.-->
+<!--Rutgers University: School of Arts and Sciences-->
+<!--01:198:213 Software Methodology, Spring 2019-->
+<!--Professor Seshadri Venugopal-->
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PhotoController">
+   <children>
+      <MenuBar layoutY="1.0" prefHeight="29.0" prefWidth="1280.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem fx:id="fileReturnToAlbums" mnemonicParsing="false" onAction="#doAlbum" text="Return to Albums" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem fx:id="fileOpenSelectedPhotoInViewer" mnemonicParsing="false" onAction="#doOpenSelectedPhotoInViewer" text="Open Selected Photo in Viewer" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem fx:id="fileSaveAndLogout" mnemonicParsing="false" onAction="#doLogOut" text="Save &amp; Logout" />
+                  <MenuItem fx:id="fileSaveAndExit" mnemonicParsing="false" onAction="#doQuit" text="Save &amp; Exit Photos" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="View">
+            <items>
+              <MenuItem fx:id="viewAsThumbnails" mnemonicParsing="false" onAction="#doViewModeThumbnail" text="As Thumbnails" />
+                  <MenuItem fx:id="viewAsSingleImage" mnemonicParsing="false" onAction="#doViewModeSingleImage" text="As Single Image" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#doHelp" text="Help" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#doAbout" text="About Photos" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <AnchorPane layoutY="29.0" prefHeight="646.0" prefWidth="330.0">
+         <children>
+            <AnchorPane prefHeight="57.0" prefWidth="334.0">
+               <children>
+                  <AnchorPane prefHeight="42.0" prefWidth="313.0">
+                     <children>
+                        <Pane layoutY="5.0" prefHeight="55.0" prefWidth="169.0">
+                           <children>
+                              <Label layoutX="27.0" layoutY="15.0" prefHeight="26.0" prefWidth="88.0" text="IMPORT" textFill="#aeaeae">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Pane layoutX="165.0" layoutY="5.0" prefHeight="55.0" prefWidth="169.0" />
+                     </children>
+                  </AnchorPane>
+               </children></AnchorPane>
+            <AnchorPane layoutY="61.0" prefHeight="585.0" prefWidth="334.0">
+               <children>
+                  <Pane prefHeight="125.0" prefWidth="336.0">
+                     <children>
+                        <Label layoutX="41.0" layoutY="10.0" text="IMPORT DESTINATION" textFill="#aeaeae">
+                           <font>
+                              <Font size="11.0" />
+                           </font>
+                        </Label>
+                        <RadioButton fx:id="radioButtonThisAlbum" layoutX="66.0" layoutY="30.0" mnemonicParsing="false" onAction="#doRadioButtonThisAlbum" text="This Album">
+                           <font>
+                              <Font size="11.0" />
+                           </font>
+                        </RadioButton>
+                        <RadioButton fx:id="radioButtonSelectedAlbum" layoutX="66.0" layoutY="50.0" mnemonicParsing="false" onAction="#doRadioButtonSelectedAlbum" text="Selected Album:">
+                           <font>
+                              <Font size="11.0" />
+                           </font>
+                        </RadioButton>
+                        <ChoiceBox fx:id="albumList" layoutX="93.0" layoutY="73.0" onMouseClicked="#doAlbumList" prefHeight="28.0" prefWidth="169.0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutY="125.0" prefHeight="115.0" prefWidth="336.0">
+                     <children>
+                        <Label layoutX="41.0" layoutY="10.0" text="PHOTO DIRECTORY" textFill="#aeaeae">
+                           <font>
+                              <Font size="11.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="41.0" layoutY="26.0" prefHeight="27.0" prefWidth="194.0" />
+                        <Button fx:id="buttonBrowse" layoutX="246.0" layoutY="25.0" mnemonicParsing="false" onAction="#selectFile" text="Browse..." />
+                        <Label layoutX="41.0" layoutY="62.0" text="ADD TAG TO SELECTION (key, value)" textFill="#aeaeae">
+                           <font>
+                              <Font size="11.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="tagName" layoutX="41.0" layoutY="78.0" prefHeight="27.0" prefWidth="96.0" />
+                        <Button fx:id="buttonConfirmTag" layoutX="246.0" layoutY="78.0" mnemonicParsing="false" onAction="#createTag" prefHeight="27.0" prefWidth="76.0" text="Confirm" />
+                        <TextField fx:id="tagValue" layoutX="139.0" layoutY="78.0" prefHeight="27.0" prefWidth="96.0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutY="240.0" prefHeight="125.0" prefWidth="336.0">
+                     <children>
+                        <Label layoutX="41.0" layoutY="14.0" text="TAGS PROVIDED" textFill="#aeaeae">
+                           <font>
+                              <Font size="11.0" />
+                           </font>
+                        </Label>
+                        <ListView fx:id="tagList" layoutX="45.0" layoutY="33.0" prefHeight="79.0" prefWidth="266.0">
+                           <contextMenu>
+                              <ContextMenu>
+                                <items>
+                                  <MenuItem mnemonicParsing="false" onAction="#deleteTag" text="Remove Tag" />
+                                </items>
+                              </ContextMenu>
+                           </contextMenu>
+                        </ListView>
+                     </children>
+                  </Pane>
+                  <Pane layoutY="378.0" prefHeight="207.0" prefWidth="336.0">
+                     <children>
+                        <Button fx:id="buttonImportSelection" layoutX="72.0" layoutY="164.0" mnemonicParsing="false" onAction="#addSelectedPhotos" prefHeight="29.0" prefWidth="193.0" text="Import Selection into Album" />
+                        <Label layoutX="45.0" layoutY="7.0" text="IMAGE SELECTION QUEUE" textFill="#aeaeae">
+                           <font>
+                              <Font size="11.0" />
+                           </font>
+                        </Label>
+                        <ListView fx:id="imageQueueList" layoutX="45.0" layoutY="22.0" onMousePressed="#doImageQueueList" prefHeight="125.0" prefWidth="266.0" />
+                     </children>
+                  </Pane>
+               </children></AnchorPane>
+         </children></AnchorPane>
+      <AnchorPane layoutX="335.0" layoutY="29.0" prefHeight="646.0" prefWidth="617.0">
+         <children>
+            <AnchorPane layoutY="7.0" prefHeight="578.0" prefWidth="527.0">
+               <children>
+                  <AnchorPane layoutY="-2.0" prefHeight="57.0" prefWidth="618.0">
+                     <children>
+                        <Label layoutX="14.0" layoutY="16.0" prefHeight="26.0" prefWidth="220.0" text="RESULTS" textFill="#aeaeae">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                     </children></AnchorPane>
+                  <AnchorPane layoutY="55.0" prefHeight="523.0" prefWidth="428.0">
+                     <children>
+                        <ScrollPane hbarPolicy="NEVER" prefHeight="523.0" prefWidth="618.0">
+                           <content>
+                              <TilePane fx:id="tilePaneImages" prefHeight="521.0" prefWidth="618.0" />
+                           </content>
+                           <contextMenu>
+                              <ContextMenu>
+                                <items>
+                                    <MenuItem mnemonicParsing="false" onAction="#deletePhoto" text="Delete Selected Photo" />
+                                    <SeparatorMenuItem mnemonicParsing="false" />
+                                    <MenuItem mnemonicParsing="false" text="Open Photo in Viewer" />
+                                </items>
+                              </ContextMenu>
+                           </contextMenu>
+                        </ScrollPane>
+                     </children>
+                  </AnchorPane>
+               </children></AnchorPane>
+            <AnchorPane layoutY="583.0" prefHeight="63.0" prefWidth="617.0">
+               <children>
+                  <Pane layoutX="-1.0" prefHeight="79.0" prefWidth="308.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="29.0" layoutX="26.0" layoutY="41.0" stroke="#dadada" strokeLineJoin="BEVEL" strokeType="INSIDE" width="238.0" />
+                        <ButtonBar layoutX="16.0" layoutY="41.0" prefHeight="29.0" prefWidth="238.0">
+                          <buttons>
+                              <RadioButton fx:id="radioButtonThumbnail" mnemonicParsing="false" onAction="#doViewModeThumbnail" text="Thumbnail" />
+                              <RadioButton fx:id="radioButtonSimpleImage" mnemonicParsing="false" onAction="#doViewModeSingleImage" text="Single Image" />
+                          </buttons>
+                        </ButtonBar>
+                        <Label layoutX="108.0" layoutY="14.0" text="VIEW MODE" textFill="#aeaeae" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="307.0" prefHeight="74.0" prefWidth="155.0">
+                     <children>
+                        <Slider fx:id="zoomSlider" layoutX="14.0" layoutY="44.0" max="2.0" min="0.25" onMousePressed="#doZoomSlider" showTickLabels="true" showTickMarks="true" />
+                        <Label layoutX="57.0" layoutY="14.0" text="ZOOM" textFill="#aeaeae" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="462.0" prefHeight="74.0" prefWidth="155.0">
+                     <children>
+                        <Label layoutX="40.0" layoutY="14.0" text="NAVIGATOR" textFill="#aeaeae" />
+                        <Button fx:id="navigatorButtonBack" layoutX="16.0" layoutY="37.0" mnemonicParsing="false" onAction="#doNavigatorButtonBack" text="Back" />
+                        <Button fx:id="navigatorButtonNext" layoutX="92.0" layoutY="37.0" mnemonicParsing="false" onAction="#doNavigatorButtonNext" text="Next" />
+                     </children></Pane>
+               </children></AnchorPane>
+         </children></AnchorPane>
+      <AnchorPane layoutX="951.0" layoutY="29.0" prefHeight="662.0" prefWidth="334.0">
+         <children>
+            <AnchorPane prefHeight="551.0" prefWidth="322.0">
+               <children>
+                  <AnchorPane prefHeight="60.0" prefWidth="318.0">
+                     <children>
+                        <Pane layoutX="-5.0" layoutY="2.0" prefHeight="55.0" prefWidth="169.0">
+                           <children>
+                              <Label layoutX="27.0" layoutY="15.0" prefHeight="26.0" prefWidth="88.0" text="DETAILS" textFill="#aeaeae">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Pane layoutX="160.0" layoutY="2.0" prefHeight="55.0" prefWidth="169.0" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutY="60.0" prefHeight="491.0" prefWidth="329.0">
+                     <children>
+                        <Pane layoutX="18.0" layoutY="14.0" prefHeight="207.0" prefWidth="295.0">
+                           <children>
+                              <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="48.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true" />
+                              <Label layoutX="16.0" layoutY="31.0" text="SIZE" textFill="#aeaeae">
+                                 <font>
+                                    <Font size="11.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="-6.0" layoutY="16.0" prefWidth="51.0" text="CREATED" textFill="#aeaeae">
+                                 <font>
+                                    <Font size="11.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="sizeField" layoutX="54.0" layoutY="31.0" prefHeight="14.0" prefWidth="200.0" text="(no image selected)">
+                                 <font>
+                                    <Font size="11.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="createdField" layoutX="54.0" layoutY="16.0" prefHeight="14.0" prefWidth="200.0" text="(no image selected)">
+                                 <font>
+                                    <Font size="11.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="8.0" layoutY="-14.0" prefHeight="14.0" prefWidth="40.0" text="NAME" textFill="#aeaeae">
+                                 <font>
+                                    <Font size="11.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="nameField" layoutX="54.0" layoutY="-14.0" prefHeight="14.0" prefWidth="200.0" text="(no image selected)">
+                                 <font>
+                                    <Font size="11.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="11.0" layoutY="1.0" prefHeight="14.0" prefWidth="30.0" text="PATH" textFill="#aeaeae">
+                                 <font>
+                                    <Font size="11.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="pathField" layoutX="54.0" layoutY="1.0" prefHeight="14.0" prefWidth="200.0" text="(no image selected)">
+                                 <font>
+                                    <Font size="11.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Pane layoutX="18.0" layoutY="221.0" prefHeight="255.0" prefWidth="295.0">
+                           <children>
+                              <Pane layoutX="2.0" layoutY="1.0" prefHeight="195.0" prefWidth="295.0" />
+                              <Pane layoutX="2.0" layoutY="195.0" prefHeight="60.0" prefWidth="295.0" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+               </children></AnchorPane>
+            <AnchorPane layoutY="549.0" prefHeight="115.0" prefWidth="321.0">
+               <children>
+                  <ButtonBar layoutX="36.0" layoutY="84.0" prefHeight="29.0" prefWidth="244.0" />
+               </children>
+            </AnchorPane>
+         </children></AnchorPane>
+      <HBox layoutY="691.0" prefHeight="29.0" prefWidth="1280.0">
+         <children>
+            <Pane prefHeight="29.0" prefWidth="426.0" />
+            <Pane prefHeight="29.0" prefWidth="426.0">
+               <children>
+                  <Label fx:id="infoData" layoutX="103.0" layoutY="8.0" text="123 albums - 12345 photos - 1.23 GB total" textFill="#a4a4a4">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane prefHeight="29.0" prefWidth="428.0" />
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
