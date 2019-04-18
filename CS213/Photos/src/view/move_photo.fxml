@@ -17,7 +17,8 @@
       <Text layoutX="141.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Album Name:" />
       <Text layoutX="212.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 24; -fx-font-weight: bold;" text="Move Photo" wrappingWidth="181.48828125" />
       <Text layoutX="141.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="To move a photo, select an album to move to." />
-      <Button fx:id="movePhoto" layoutX="249.0" layoutY="151.0" mnemonicParsing="false" onAction="#movePhoto" text="Copy" />
+      <Button fx:id="movePhoto" layoutX="217.0" layoutY="151.0" mnemonicParsing="false" onAction="#movePhoto" text="Copy" />
       <ChoiceBox fx:id="albumPicker" layoutX="222.0" layoutY="113.0" prefHeight="28.0" prefWidth="189.0" />
+      <Button fx:id="cancelButton" layoutX="278.0" layoutY="151.0" mnemonicParsing="false" onAction="#doCancel" text="Cancel" />
    </children>
 </AnchorPane>

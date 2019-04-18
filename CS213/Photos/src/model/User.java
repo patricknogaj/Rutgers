@@ -37,6 +37,7 @@ public class User implements Comparable<User>, Serializable {
 
 	/**
 	 * Default User constructor
+	 * 
 	 * @param username -- username of User utilized for login.
 	 * @param password -- password of User utilized for login.
 	 */
@@ -50,6 +51,7 @@ public class User implements Comparable<User>, Serializable {
 
 	/**
 	 * Method to add an album.
+	 * 
 	 * @param albumName : String object to check to see if Album currently exists
 	 * @return index of where it was placed in the ObservableList<Album>.
 	 */
@@ -65,10 +67,12 @@ public class User implements Comparable<User>, Serializable {
 			return -1;
 		}
 	}
-	
+
 	/**
 	 * Method to delete an album.
-	 * @param index : index is gathered from the UserController and specifies the index of the Album to delete.
+	 * 
+	 * @param index : index is gathered from the UserController and specifies the
+	 *              index of the Album to delete.
 	 * @return true || false depending on action.
 	 */
 	public boolean deleteAlbum(int index) {
@@ -86,7 +90,9 @@ public class User implements Comparable<User>, Serializable {
 
 	/**
 	 * Inserts the album in a sorted way by utilizing the Album compareTo().
-	 * @param album : an Album object to compare with the rest of the Albums in the ObservableList<Album>.
+	 * 
+	 * @param album : an Album object to compare with the rest of the Albums in the
+	 *              ObservableList<Album>.
 	 * @return the index of where it was placed in the ObservableList<Album>.
 	 */
 	private int indexInsertedSorted(Album album) {
@@ -106,10 +112,14 @@ public class User implements Comparable<User>, Serializable {
 	}
 
 	/**
-	 * Edits the album name by utilizing keys of the current album, and prospective album.
-	 * @param index : index of location in the album list gathered from UserController.java
+	 * Edits the album name by utilizing keys of the current album, and prospective
+	 * album.
+	 * 
+	 * @param index     : index of location in the album list gathered from
+	 *                  UserController.java
 	 * @param albumName : String containing new album name.
-	 * @return index of where it was placed in the ObservableList<Album> or -1 if not added.
+	 * @return index of where it was placed in the ObservableList<Album> or -1 if
+	 *         not added.
 	 */
 	public int edit(int index, String albumName) {
 		String oldKey = albumList.get(index).getKey();
@@ -135,18 +145,21 @@ public class User implements Comparable<User>, Serializable {
 			}
 		}
 	}
-	
+
 	/**
 	 * Generates the key for a specific User.
+	 * 
 	 * @param username : String from the User regarding the username
-	 * @return username which is all lowercased to ensure all keys are compared with the same constraints.
+	 * @return username which is all lowercased to ensure all keys are compared with
+	 *         the same constraints.
 	 */
 	public static String makeKey(String username) {
 		return username.toLowerCase();
 	}
-	
+
 	/**
 	 * Generates a key for a user utilizing the username to differentiate users.
+	 * 
 	 * @return a String of the username which is lowercased.
 	 */
 	public String getKey() {
@@ -155,6 +168,7 @@ public class User implements Comparable<User>, Serializable {
 
 	/**
 	 * Returns the username.
+	 * 
 	 * @return a String object with the username.
 	 */
 	public String getUsername() {
@@ -163,6 +177,7 @@ public class User implements Comparable<User>, Serializable {
 
 	/**
 	 * Returns the password.
+	 * 
 	 * @return a String object with the password.
 	 */
 	public String getPassword() {
@@ -171,6 +186,7 @@ public class User implements Comparable<User>, Serializable {
 
 	/**
 	 * Returns the albumList for a specific user
+	 * 
 	 * @return an ObservableList<Album> object which contains the users albums.
 	 */
 	public ObservableList<Album> getAlbumList() {
@@ -179,6 +195,7 @@ public class User implements Comparable<User>, Serializable {
 
 	/**
 	 * Return the current album object.
+	 * 
 	 * @return an Album object
 	 */
 	public Album getCurrentAlbum() {
@@ -186,8 +203,11 @@ public class User implements Comparable<User>, Serializable {
 	}
 
 	/**
-	 * Returns the TreeMap<String, Album> of the current user which is utilized to save data.
-	 * @return an TreeMap<String, Album> object. String is the Album key, and the value is the actual Album object.
+	 * Returns the TreeMap<String, Album> of the current user which is utilized to
+	 * save data.
+	 * 
+	 * @return an TreeMap<String, Album> object. String is the Album key, and the
+	 *         value is the actual Album object.
 	 */
 	public TreeMap<String, Album> getAlbumMap() {
 		return albumMap;
@@ -195,6 +215,7 @@ public class User implements Comparable<User>, Serializable {
 
 	/**
 	 * Sets the ObservableList<Album> to the parameter.
+	 * 
 	 * @param albumList an ObservableList<Album> object to be passed and set.
 	 */
 	public void setAlbumList(ObservableList<Album> albumList) {
@@ -203,21 +224,24 @@ public class User implements Comparable<User>, Serializable {
 
 	/**
 	 * Sets the current Album object to the parameter.
+	 * 
 	 * @param currentAlbum : Album object to set to current.
 	 */
 	public void setCurrentAlbum(Album currentAlbum) {
 		this.currentAlbum = currentAlbum;
 	}
-	
+
 	/**
 	 * Sets the current Album object to the parameter.
-	 * @param currentAlbum : String to create an album, and check in the TreeMap<String, Album> for that value.
+	 * 
+	 * @param currentAlbum : String to create an album, and check in the
+	 *                     TreeMap<String, Album> for that value.
 	 */
 	public void setCurrentAlbum(String currentAlbum) {
 		String key = Album.makeKey(currentAlbum);
 		Album temp = albumMap.get(key);
-		
-		if(temp != null) {
+
+		if (temp != null) {
 			this.currentAlbum = albumMap.get(key);
 		}
 	}
@@ -231,12 +255,12 @@ public class User implements Comparable<User>, Serializable {
 		User other = (User) o;
 		return this.username.equalsIgnoreCase(other.username);
 	}
-	
+
 	@Override
 	public int compareTo(User user) {
 		return this.username.compareToIgnoreCase(user.username);
 	}
-	
+
 	@Override
 	public String toString() {
 		return "(username) " + username + " " + "(password) " + password;

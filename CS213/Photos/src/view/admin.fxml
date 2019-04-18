@@ -43,8 +43,8 @@
               <menus>
                 <Menu mnemonicParsing="false" text="File">
                   <items>
-                        <MenuItem onAction="#doLogOff" mnemonicParsing="false" text="Logoff" />
-                    <MenuItem onAction="#doQuit" mnemonicParsing="false" text="Close" />
+                        <MenuItem mnemonicParsing="false" onAction="#doLogOff" text="Logoff" />
+                    <MenuItem mnemonicParsing="false" onAction="#doQuit" text="Close" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
@@ -54,7 +54,8 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                   <items>
-                    <MenuItem onAction="#doAbout" mnemonicParsing="false" text="About" />
+                        <MenuItem mnemonicParsing="false" onAction="#doHelp" text="Help" />
+                    <MenuItem mnemonicParsing="false" onAction="#doAbout" text="About" />
                   </items>
                 </Menu>
               </menus>

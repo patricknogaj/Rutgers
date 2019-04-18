@@ -12,13 +12,14 @@
 package model;
 
 /**
+ * Represents either a single Tag with no conditional, or a pair of Tags with a
+ * conditional.
+ * 
  * @version Apr 16, 2019
  * @author gemuelealudino
- *
  */
-
 public class TagConditional {
-	
+
 	private Tag tag1;
 	private Tag tag2;
 
@@ -26,6 +27,7 @@ public class TagConditional {
 
 	/**
 	 * Default constructor of a TagConditional object.
+	 * 
 	 * @param tag1: Tag object
 	 * @param tag2: Tag object
 	 * @param conditional: String which contains AND/OR/NOT.
@@ -45,66 +47,72 @@ public class TagConditional {
 			break;
 		}
 	}
-	
+
 	/**
 	 * Checks to see if the current condition is "AND"
+	 * 
 	 * @return true | false based on condition.
 	 */
 	public boolean isAnd() {
 		return conditional.equals("AND");
 	}
-	
+
 	/**
 	 * Checks to see if the current condition is "OR"
+	 * 
 	 * @return true | false based on condition.
 	 */
 	public boolean isOr() {
 		return conditional.equals("OR");
 	}
-	
+
 	/**
 	 * Checks to see if the current condition is "NOT"
+	 * 
 	 * @return true | false based on condition.
 	 */
 	public boolean isNot() {
 		return conditional.equals("NOT");
 	}
-	
+
 	/**
 	 * Checks to see if there is no current condition.
+	 * 
 	 * @return true | false based on condition.
 	 */
 	public boolean isSearchNoConditional() {
 		return conditional.equals("searchNOconditional");
 	}
-	
+
 	/**
 	 * Gets the first Tag object.
+	 * 
 	 * @return Tag
 	 */
 	public Tag getTag1() {
 		return tag1;
 	}
-	
+
 	/**
 	 * Gets the second Tag object.
+	 * 
 	 * @return Tag
 	 */
 	public Tag getTag2() {
 		return tag2;
 	}
-	
+
 	@Override
 	public boolean equals(Object o) {
 		if (o != null && o instanceof TagConditional) {
-			TagConditional tc = (TagConditional)(o);
-			
-			return tag1.equals(tc.tag2) && conditional.equals(tc.conditional); 
+			TagConditional tc = (TagConditional) (o);
+
+			return tag1.equals(tc.tag2) && conditional.equals(tc.conditional);
 		} else {
 			return false;
 		}
 	}
-	
+
 	@Override
 	public String toString() {
 		return String.format("%s %s %s", tag1, conditional, tag2);

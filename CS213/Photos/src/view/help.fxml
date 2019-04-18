@@ -14,23 +14,23 @@
 
 <AnchorPane prefHeight="559.0" prefWidth="396.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TextArea editable="false" layoutX="47.0" layoutY="50.0" prefHeight="135.0" prefWidth="300.0" text="Menu bar:   [left click] File &gt; Add Song to Playlist&#10;Button bar: [left click] the 'Add...' button&#10;&#10;'Song Title' and 'Artist Name' are mandatory. &#10;A song will not be added otherwise.&#10;&#10;Duplicate song entries are not permitted.&#10;Such entries are denoted by songs having &#10;identical Song Title and Artist Name fields.">
+      <TextArea editable="false" layoutX="47.0" layoutY="50.0" prefHeight="135.0" prefWidth="300.0" text="On the left hand pane, all albums&#10;will be displayed that the user has.&#10;&#10;Albums will contain the photo count, and&#10;the date ranges for that album.&#10;&#10;You can add an album via NEW ALBUM...&#10;and delete/rename via right clicking the ALBUM.">
          <font>
             <Font size="11.0" />
          </font>
       </TextArea>
-      <TextArea editable="false" layoutX="46.0" layoutY="220.0" prefHeight="135.0" prefWidth="300.0" text="[left click] the song you want to edit,&#10;and do any of the following:&#10;&#10;[right click] &gt; Edit Selected Song&#10;Menu bar:   [left click] Edit &gt; Edit Selected Song&#10;Button bar: [left click] the 'Edit...' button&#10;&#10;'Song Title' and 'Artist Name' remain mandatory.&#10;As per 'Add Song', duplicate songs are not permitted.">
+      <TextArea editable="false" layoutX="46.0" layoutY="220.0" prefHeight="135.0" prefWidth="300.0" text="When an album is selected, the photos&#10;will be populated within the pane.&#10;&#10;Images are selectable which will display&#10;the details in the DETAILS PANE.&#10;&#10;Zoom allows you to modify the size of&#10;the images within the window.&#10;&#10;Navigator allows you to navigate foward&#10;and back from the selected image.">
          <font>
             <Font size="11.0" />
          </font>
       </TextArea>
-      <TextArea editable="false" layoutX="48.0" layoutY="390.0" prefHeight="135.0" prefWidth="300.0" text="[left click] the song you want to delete,&#10;and do any of the following:&#10;&#10;[right click] &gt; Edit Selected Song&#10;Menu bar:   [left click] Edit &gt; Delete Selected Song&#10;Button bar: [left click] the 'Delete...' button&#10;&#10;You will be prompted to confirm your decision&#10;to delete the highlighted song.">
+      <TextArea editable="false" layoutX="48.0" layoutY="390.0" prefHeight="135.0" prefWidth="300.0" text="This displays all details from the current photo&#10;that is selected.&#10;&#10;A smaller image of the selected photo&#10;will display on the top, followed by&#10;the caption associated with the image.&#10;&#10;Under that, you are able to modify&#10;the caption.&#10;&#10;You can add tags to the photo&#10;which will be in the format&#10;KEY :: VALUE.">
          <font>
             <Font size="11.0" />
          </font>
       </TextArea>
-      <Text layoutX="48.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ADD SONG" />
-      <Text layoutX="48.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="EDIT SONG" />
-      <Text layoutX="48.0" layoutY="386.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DELETE SONG" />
+      <Text layoutX="48.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ALBUMS" />
+      <Text layoutX="48.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DISPLAY PANE" />
+      <Text layoutX="48.0" layoutY="386.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DETAILS PANE" />
    </children>
 </AnchorPane>

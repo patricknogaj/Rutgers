@@ -17,7 +17,6 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.Slider?>
@@ -28,7 +27,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.TilePane?>
-<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UserController">
@@ -46,17 +44,10 @@
                   <MenuItem fx:id="fileSaveAndExit" mnemonicParsing="false" onAction="#doQuit" text="Save &amp; Exit Photos" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="View">
-            <items>
-              <MenuItem fx:id="viewAsThumbnails" mnemonicParsing="false" onAction="#doViewModeThumbnail" text="As Thumbnails" />
-                  <MenuItem fx:id="viewAsSingleImage" mnemonicParsing="false" onAction="#doViewModeSingleImage" text="As Single Image" />
-            </items>
-          </Menu>
             <Menu fx:id="menuSearch" mnemonicParsing="false" text="Search">
                <items>
                   <MenuItem fx:id="searchAllAlbums" mnemonicParsing="false" onAction="#doSearchAllAlbums" text="All Albums" />
                   <MenuItem fx:id="searchCurrentAlbum" mnemonicParsing="false" onAction="#doSearchCurrentAlbum" text="Current Album" />
-                  <Menu fx:id="menuAlbums" mnemonicParsing="false" onAction="#doMenuAlbums" text="Album..." />
                </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Help">
@@ -128,7 +119,7 @@
                                 <items>
                                     <MenuItem mnemonicParsing="false" onAction="#deletePhoto" text="Delete Selected Photo from this Album" />
                                     <SeparatorMenuItem mnemonicParsing="false" />
-                                    <MenuItem mnemonicParsing="false" text="Open Photo in Viewer" />
+                                    <MenuItem mnemonicParsing="false" onAction="#doOpenSelectedPhotoInViewer" text="Open Photo in Viewer" />
                                 </items>
                               </ContextMenu>
                            </contextMenu>
@@ -139,18 +130,7 @@
                </children></AnchorPane>
             <AnchorPane layoutY="583.0" prefHeight="63.0" prefWidth="617.0">
                <children>
-                  <Pane layoutX="-1.0" prefHeight="79.0" prefWidth="308.0">
-                     <children>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="29.0" layoutX="26.0" layoutY="41.0" stroke="#dadada" strokeLineJoin="BEVEL" strokeType="INSIDE" width="238.0" />
-                        <ButtonBar layoutX="16.0" layoutY="41.0" prefHeight="29.0" prefWidth="238.0">
-                          <buttons>
-                              <RadioButton fx:id="radioButtonThumbnail" mnemonicParsing="false" onAction="#doViewModeThumbnail" text="Thumbnail" />
-                              <RadioButton fx:id="RadioButtonSingleImage" mnemonicParsing="false" onAction="#doViewModeSingleImage" text="Single Image" />
-                          </buttons>
-                        </ButtonBar>
-                        <Label layoutX="108.0" layoutY="14.0" text="VIEW MODE" textFill="#aeaeae" />
-                     </children>
-                  </Pane>
+                  <Pane layoutX="-1.0" prefHeight="79.0" prefWidth="308.0" />
                   <Pane layoutX="307.0" prefHeight="74.0" prefWidth="155.0">
                      <children>
                         <Slider fx:id="zoomSlider" layoutX="14.0" layoutY="44.0" max="2.0" min="0.25" onMousePressed="#doZoomSlider" showTickLabels="true" showTickMarks="true" />

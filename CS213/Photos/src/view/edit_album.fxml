@@ -20,7 +20,7 @@
       <Button fx:id="editAlbum" layoutX="213.0" layoutY="151.0" mnemonicParsing="false" onAction="#doRename" text="Submit" />
       <TextField fx:id="renameAlbumName" layoutX="216.0" layoutY="115.0" prefHeight="26.0" prefWidth="187.0" />
       <Text layoutX="148.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Old Name:" />
-      <Button fx:id="cancelEdit" layoutX="284.0" layoutY="151.0" mnemonicParsing="false" onAction="#doCreate" text="Cancel" />
+      <Button fx:id="cancelButton" layoutX="284.0" layoutY="151.0" mnemonicParsing="false" onAction="#doCancel" text="Cancel" />
       <Text fx:id="oldName" layoutX="213.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="180.4882768392563" />
    </children>
 </AnchorPane>

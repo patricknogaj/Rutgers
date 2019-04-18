@@ -8,6 +8,7 @@
  * 01:198:213 Software Methodology, Spring 2019
  * Professor Seshadri Venugopal
  */
+
 package controller;
 
 import java.io.File;
@@ -103,14 +104,15 @@ public class SearchController {
 
 	List<TagConditional> tagConditionalList;
 
-	ObservableList<Photo> photoListSearchResults = FXCollections
-			.observableArrayList();
+	ObservableList<Photo> photoListSearchResults = FXCollections.observableArrayList();
 	TreeMap<String, Photo> photoMapSearchResults;
 
 	private Photo currentPhoto = null;
 	private PhotoModel model = LoginController.getModel();
 	private Album currentAlbum = null;
 	private User currentUser = model.getCurrentUser();
+
+	public static Photo currentSelectedPhoto;
 
 	private List<ImageView> currentImageViewList = null;
 
@@ -124,19 +126,18 @@ public class SearchController {
 	@FXML Button navigatorButtonBack;
 	@FXML Button navigatorButtonNext;
 	@FXML Button buttonSearchNow;
-	
 	@FXML Button buttonCopyPhoto;
 	@FXML Button buttonDeletePhoto;
-	@FXML Button buttonMovePhoto;
-	
+	@FXML Button buttonMovePhoto;	
 	@FXML Button buttonAddCaption;
 	@FXML Button buttonAddTag;
 	@FXML Button buttonAddTagPair;
+	@FXML Button cancelButton;
 	
 	@FXML CheckBox checkBoxDeleteFromDisk;
 	@FXML CheckBox checkBoxPromptBeforeDelete;
 	
-	@FXML ChoiceBox<Album> albumList;
+	@FXML ChoiceBox<String> albumList;
 	
 	@FXML DatePicker datePickerFrom;
 	@FXML DatePicker datePickerTo;
@@ -169,9 +170,6 @@ public class SearchController {
 	@FXML MenuItem viewAsSingleImage;
 	@FXML MenuItem viewAsThumbnails;
 	
-	@FXML RadioButton radioButtonThumbnail;
-	@FXML RadioButton radioButtonSingleImage;
-	
 	@FXML RadioButton radioButtonThisAlbum;
 	@FXML RadioButton radioButtonSelectedAlbum;
 	@FXML RadioButton radioButtonAllAlbums;
@@ -202,22 +200,29 @@ public class SearchController {
 		/**
 		 * Upon entering SearchController,
 		 * 
-		 * You must pass the User's album list so it can be used for either
-		 * searching - the previous selected album from UserController - a
-		 * user-selectable album (from their list of Albums) - all of their
-		 * albums.
+		 * You must pass the User's album list so it can be used for either searching -
+		 * the previous selected album from UserController - a user-selectable album
+		 * (from their list of Albums) - all of their albums.
 		 */
 
 		/**
 		 * Setting default values
 		 */
-		radioButtonSelectedAlbum.setSelected(true);
-		doRadioButtonSelectedAlbum();
+
+		if (UserController.searchCurrent()) {
+			radioButtonThisAlbum.setSelected(true);
+			doRadioButtonThisAlbum();
+		} else if (UserController.searchAll()) {
+			radioButtonAllAlbums.setSelected(true);
+			doRadioButtonAllAlbums();
+		} else {
+			radioButtonSelectedAlbum.setSelected(true);
+			doRadioButtonSelectedAlbum();
+		}
 
 		resetAndOrNot();
-
-		radioButtonThumbnail.setSelected(true);
-		doViewModeThumbnail();
+		
+		checkBoxPromptBeforeDelete.setSelected(true);
 
 		Album possibleAlbum = currentUser.getCurrentAlbum();
 		currentAlbum = possibleAlbum != null ? possibleAlbum : null;
@@ -226,43 +231,52 @@ public class SearchController {
 
 		tagConditionalList = new ArrayList<TagConditional>();
 		photoMapSearchResults = new TreeMap<String, Photo>();
+		
+
+
+		updateInfoData();
 
 		/**
 		 * CONSOLE DIAGNOSTICS
 		 */
 		System.out.println();
-		debugLog("Entering " + getClass().getSimpleName());
 	}
 
+	/**
+	 * Initializes the album drop-down list
+	 */
 	public void initAlbumList() {
 		albumList.getItems().clear();
 
-		ObservableList<Album> currentAlbumList = model.getCurrentUser()
-				.getAlbumList();
+		ObservableList<Album> currentAlbumList = model.getCurrentUser().getAlbumList();
 
-		for (Album a : currentAlbumList) {
-			albumList.getItems().add(a);
+		//for (Album a : currentAlbumList) {
+		//	albumList.getItems().add(a);
+		//}
+		
+		for (Album a : model.getCurrentUser().getAlbumList()) {
+			albumList.getItems().add(a.getAlbumName());
 		}
 
 		albumList.setOnAction(event -> {
 			radioButtonSelectedAlbum.setSelected(true);
 			doRadioButtonSelectedAlbum();
-			Album test = albumList.getValue();
+			String aName = albumList.getValue();
+			Album test = new Album(aName);
 
 			for (Album a : currentAlbumList) {
 				if (a.equals(test)) {
-					debugLog(a + " == " + test);
-
 					model.getCurrentUser().setCurrentAlbum(test);
 					currentAlbum = test;
 				}
 			}
-
-			debugLog("selected album: " + currentAlbum.getAlbumName());
 		});
 
 	}
 
+	/**
+	 * Re-assigns the current album to selectedAlbum
+	 */
 	public void doAlbumList() {
 		radioButtonSelectedAlbum.setSelected(true);
 		doRadioButtonSelectedAlbum();
@@ -272,17 +286,30 @@ public class SearchController {
 		// get the newly assigned album from here
 		// @FXML ChoiceBox<Album> albumList;
 
-		Album selectedAlbum = albumList.getSelectionModel().getSelectedItem();
+		/*
+		String aName = albumList.getSelectionModel().getSelectedItem();
+		Album selectedAlbum = new Album(aName);
+		model.getCurrentUser().setCurrentAlbum(selectedAlbum);
+		//Album selectedAlbum = albumList.getSelectionModel().getSelectedItem();
 		currentAlbum = selectedAlbum != null ? selectedAlbum : null;
-
-		debugLog("[doAlbumList]" + " newly selected album: " + currentAlbum);
+		*/
+		albumList.setOnAction(event -> {
+			Album test = new Album(albumList.getValue());
+			for (Album a : model.getCurrentUser().getAlbumList()) {
+				if (a.equals(test)) {
+					model.getCurrentUser().setCurrentAlbum(test);
+				}
+			}
+		});
 	}
 
+	/**
+	 * Invokes search functionality
+	 */
 	public void doButtonSearchNow() {
-		debugLog("[doButtonSearchNow]");
 		photoMapSearchResults.clear();
 		photoListSearchResults.clear();
-		
+
 		if (invalidDatesFromTo()) {
 			return;
 		}
@@ -292,77 +319,65 @@ public class SearchController {
 		for (Photo photo : photoMapSearchResults.values()) {
 			photoListSearchResults.add(photo);
 		}
-		
-		
-		debugLog("map: " + photoMapSearchResults);
-		debugLog("list: " + photoListSearchResults);
-		
-		
-		
-		
+
 		tilePaneImages.getChildren().clear();
-		
 
 		tilePaneImages.setStyle("-fx-focus-color: transparent;");
-		
+
 		/**
-		 * Adds padding and insets to thumbnails. Ought to be
-		 * adjusted later.
+		 * Adds padding and insets to thumbnails. Ought to be adjusted later.
 		 */
-		tilePaneImages.setPadding(
-				new Insets(imageInsetValue, imageInsetValue,
-						imageInsetValue, imageInsetValue));
+		tilePaneImages.setPadding(new Insets(imageInsetValue, imageInsetValue, imageInsetValue, imageInsetValue));
 
 		tilePaneImages.setHgap(imageInsetValue);
 
 		currentImageViewList = new ArrayList<ImageView>();
 
-		
 		for (Photo p : photoMapSearchResults.values()) {
 			File test = new File(p.getFilepath());
 			Image test2 = new Image(test.toURI().toString());
 			ImageView iv = new ImageView(test2);
-			
+
 			p.setDataPhoto(test.lastModified());
 			p.setSizePhoto(test.length());
-			
+
 			iv.setFitHeight(imageHeightValue);
 			iv.setFitWidth(imageWidthValue);
 			iv.setPreserveRatio(true);
 
 			iv.addEventFilter(MouseEvent.MOUSE_PRESSED, e -> {
 				if (e.isSecondaryButtonDown()) {
-					debugLog("Image " + p.getFilename()
-							+ " right clicked");
+
 				} else {
 
 					if (iv.getBoundsInParent() != null) {
-						iv.setStyle(
-								"-fx-effect: innershadow(gaussian, #039ed3, 4, 2.0, 0, 0);");
+						iv.setStyle("-fx-effect: innershadow(gaussian, #039ed3, 4, 2.0, 0, 0);");
 					}
 
-					setSelectedIndex(tilePaneImages
-							.getChildren().indexOf(iv));
+					setSelectedIndex(tilePaneImages.getChildren().indexOf(iv));
 					currentPhoto = p;
+					currentSelectedPhoto = currentPhoto;
 
-					debugLog("Image " + p.getFilename()
-							+ " selected");
-					
 					System.out.println(currentImageViewList.size());
 
-					nameField.setText(
-							currentPhoto.getFilename());
-					pathField.setText(
-							currentPhoto.getFilepath());
-					sizeField.setText(
-							currentPhoto.getFileSize() + " KB");
-					createdField.setText(
-							currentPhoto.getDatePhoto() + " ");
+					nameField.setText(currentPhoto.getFilename());
+					pathField.setText(currentPhoto.getFilepath());
+					sizeField.setText(currentPhoto.getFileSize() + " KB");
+					createdField.setText(currentPhoto.getDatePhoto() + " ");
+
+					displayCaption.setText(p.getCaption());
+
+					captionField.setText("");
+
+					detailView.setImage(new Image(test.toURI().toString()));
+					detailView.setFitHeight(DEFAULT_HEIGHT_VALUE);
+					detailView.setFitWidth(DEFAULT_WIDTH_VALUE);
+					detailView.setVisible(true);
+					detailView.setPreserveRatio(true);
 
 					tList = FXCollections.observableArrayList();
-					
-					for (Map.Entry<String, Tag> tag : currentPhoto
-							.getTagMap().entrySet()) {
+
+					for (Map.Entry<String, Tag> tag : currentPhoto.getTagMap().entrySet()) {
 						tList.add(tag.getValue());
 					}
 
@@ -373,66 +388,39 @@ public class SearchController {
 				}
 			});
 
-			tilePaneImages.addEventFilter(
-					MouseEvent.MOUSE_PRESSED, e -> {
-						if (e.isPrimaryButtonDown()) {
-							iv.setStyle(null);
+			tilePaneImages.addEventFilter(MouseEvent.MOUSE_PRESSED, e -> {
+				if (e.isPrimaryButtonDown()) {
+					iv.setStyle(null);
 
-							nameField.setText(
-									"(No image selected)");
-							pathField.setText(
-									"(No image selected)");
-							sizeField.setText(
-									"(No image selected)");
-							createdField.setText(
-									"(No image selected)");
-							
-							tagName.setText(null);
-							tagValue.setText(null);
-							tagList.setItems(null);
-						}
-					});
+					detailView.setImage(null);
+					displayCaption.setText(null);
+					nameField.setText("(No image selected)");
+					pathField.setText("(No image selected)");
+					sizeField.setText("(No image selected)");
+					createdField.setText("(No image selected)");
+
+					tagName.setText(null);
+					tagValue.setText(null);
+					tagList.setItems(null);
+					captionField.setText(null);
+
+					currentPhoto = null;
+				}
+			});
 
 			tilePaneImages.getChildren().add(iv);
 
 			currentImageViewList.add(iv);
 		}
-		
+
 	}
-	
 
-
+	/**
+	 * Returns a TreeMap represents the search query results
+	 * 
+	 * @return treeMap of search results based on parameters given
+	 */
 	public TreeMap<String, Photo> conductSearch() {
-		/*
-		 * boolean searchScopeThisAlbum; boolean searchScopeSelectedAlbum;
-		 * boolean searchScopeAllAlbums;
-		 * 
-		 * boolean searchThisAlbum; boolean searchSelectedAlbum; boolean
-		 * searchAllAlbums;
-		 * 
-		 * boolean searchAnd; boolean searchOr; boolean searchNot;
-		 */
-
-		/*
-		 * LocalDate dateFrom; LocalDate dateTo;
-		 * 
-		 * List<TagConditional> tagConditionalList;
-		 * 
-		 * private Photo currentPhoto = null; private PhotoModel model =
-		 * LoginController.getModel(); private Album currentAlbum = null;
-		 * private User currentUser = model.getCurrentUser();
-		 * 
-		 * private List<ImageView> currentImageViewList = null;
-		 * 
-		 * ObservableList<Photo> photoList =
-		 * FXCollections.observableArrayList();
-		 */
-
-		/*
-		 * ObservableList<Photo> photoListSearchResults; TreeMap<String, Photo>
-		 * photoMapSearchResults;
-		 */
-
 		TreeMap<String, Photo> results = new TreeMap<String, Photo>();
 
 		TreeMap<String, Album> aMap = currentUser.getAlbumMap();
@@ -442,7 +430,6 @@ public class SearchController {
 				if (photo.isInDateRange(dateFrom, dateTo)) {
 					if (tagConditionalList.isEmpty()) {
 						// add all photos in date range to results
-						debugLog("FOUND: " + photo + " " + currentAlbum);
 						String key = photo.getKey();
 						results.put(key, photo);
 					} else {
@@ -450,8 +437,6 @@ public class SearchController {
 							if (photo.matchesTagConditional(conditional)) {
 								// add all photos in date range
 								// and matched conditional to results
-								debugLog(
-										"FOUND: " + photo + " " + currentAlbum);
 								String key = photo.getKey();
 								results.put(key, photo);
 							}
@@ -464,7 +449,7 @@ public class SearchController {
 				for (Photo photo : album.getPhotoMap().values()) {
 					if (tagConditionalList.isEmpty()) {
 						// add all photos in date range to results
-						debugLog("FOUND: " + photo + " " + currentAlbum);
+
 						String key = photo.getKey();
 						results.put(key, photo);
 					} else {
@@ -473,8 +458,7 @@ public class SearchController {
 								if (photo.matchesTagConditional(conditional)) {
 									// add all photos in date range
 									// and matched conditional to results
-									debugLog("FOUND: " + photo + " "
-											+ currentAlbum);
+
 									String key = photo.getKey();
 									results.put(key, photo);
 								}
@@ -488,6 +472,11 @@ public class SearchController {
 		return results;
 	}
 
+	/**
+	 * Checks dateFrom and dateTo to see if they are chronologically ordered
+	 * 
+	 * @return true if dateFrom is chronologically after dateTo, false otherwise
+	 */
 	public boolean invalidDatesFromTo() {
 		if (dateFrom == null) {
 			dateFrom = LocalDate.MIN;
@@ -501,8 +490,6 @@ public class SearchController {
 			String errorStr = String.format("%s\n%s", "ERROR: See DATE RANGE.",
 					"FROM must be chronologically before TO.");
 
-			debugLog("[checkDateFromTo]" + errorStr);
-
 			Alert error = new Alert(Alert.AlertType.ERROR, errorStr);
 			error.showAndWait();
 
@@ -512,9 +499,10 @@ public class SearchController {
 		}
 	}
 
+	/**
+	 * Removes a TagConditional from the tag selection queue
+	 */
 	public void doMenuItemRemoveTagFromSearch() {
-		debugLog("[doMenuItemRemoveTagFromSearch]");
-
 		// menuItemRemoveTagFromSearch
 
 		// Remove the tag conditional from these three:
@@ -522,11 +510,10 @@ public class SearchController {
 		// List<TagConditional> tagConditionalList;
 		// @FXML ListView<TagConditional> listViewTagSearch;
 
-		int selectedIndex = listViewTagSearch.getSelectionModel()
-				.getSelectedIndex();
+		int selectedIndex = listViewTagSearch.getSelectionModel().getSelectedIndex();
 
 		if (selectedIndex < 0) {
-			debugLog("No TagConditional to remove.");
+	
 			return;
 		}
 
@@ -536,9 +523,10 @@ public class SearchController {
 		buttonAddTagPair.setDisable(false);
 	}
 
+	/**
+	 * Adds a TagConditional to the tag selection queue
+	 */
 	public void doButtonAddTagPair() {
-		debugLog("[doButtonAddTagPair]");
-
 		Tag tag1 = null;
 		Tag tag2 = null;
 
@@ -549,8 +537,8 @@ public class SearchController {
 		stringSearchTagValueOne = searchTagValueOne.getText();
 
 		/**
-		 * Tag pair will not be added if -searchNoConditional is on -text fields
-		 * for tag1 are incomplete
+		 * Tag pair will not be added if -searchNoConditional is on -text fields for
+		 * tag1 are incomplete
 		 */
 		if (checkSearchTag1NameValue()) {
 			return;
@@ -559,14 +547,13 @@ public class SearchController {
 		tag1 = new Tag(stringSearchTagNameOne, stringSearchTagValueOne);
 
 		/**
-		 * If searchAnd, searchOr, or searchNot All text fields for tag1 and
-		 * tag2 must be filled.
+		 * If searchAnd, searchOr, or searchNot All text fields for tag1 and tag2 must
+		 * be filled.
 		 */
 		if (searchAnd || searchOr || searchNot) {
 
 			/**
-			 * Check to see if tag1 fields are either completely empty or
-			 * partially filled
+			 * Check to see if tag1 fields are either completely empty or partially filled
 			 */
 			if (checkSearchTag1NameValueEmpty() || checkSearchTag1NameValue()) {
 				return;
@@ -579,8 +566,7 @@ public class SearchController {
 			stringSearchTagValueTwo = searchTagValueTwo.getText();
 
 			/**
-			 * Check to see if tag2 fields are either completely empty or
-			 * partially filled
+			 * Check to see if tag2 fields are either completely empty or partially filled
 			 */
 			if (checkSearchTag2NameValueEmpty() || checkSearchTag2NameValue()) {
 				return;
@@ -590,8 +576,8 @@ public class SearchController {
 		}
 
 		/**
-		 * Determine the condition based on the RadioButtons activated and the
-		 * boolean values set.
+		 * Determine the condition based on the RadioButtons activated and the boolean
+		 * values set.
 		 */
 		String condition = "";
 		if (searchAnd) {
@@ -619,21 +605,22 @@ public class SearchController {
 		/**
 		 * Add the ObservableList<TagConditional> to the ListView interface
 		 */
-		listViewTagSearch.setItems(
-				FXCollections.observableArrayList(tagConditionalList));
+		listViewTagSearch.setItems(FXCollections.observableArrayList(tagConditionalList));
 
 		buttonAddTagPair.setDisable(true);
 
 		resetTextFields();
 		resetAndOrNot();
-		debugLog(conditional + "was added");
 	}
 
+	/**
+	 * Checks to see if tag1 is partially provided
+	 * 
+	 * @return true if tag1 is incomplete, false otherwise
+	 */
 	public boolean checkSearchTag1NameValue() {
-		if (!stringSearchTagNameOne.equals("")
-				&& stringSearchTagValueOne.equals("")
-				|| stringSearchTagNameOne.equals("")
-						&& !stringSearchTagValueOne.equals("")) {
+		if (!stringSearchTagNameOne.equals("") && stringSearchTagValueOne.equals("")
+				|| stringSearchTagNameOne.equals("") && !stringSearchTagValueOne.equals("")) {
 			String errorStr = "Please provide a complete key and value for tag 1.";
 			Alert error = new Alert(Alert.AlertType.ERROR, errorStr);
 			error.showAndWait();
@@ -643,9 +630,13 @@ public class SearchController {
 		}
 	}
 
+	/**
+	 * Checks to see if tag2 is empty
+	 * 
+	 * @return true if tag1 is empty, false otherwise
+	 */
 	public boolean checkSearchTag1NameValueEmpty() {
-		if (stringSearchTagNameOne.equals("")
-				&& stringSearchTagValueOne.equals("")) {
+		if (stringSearchTagNameOne.equals("") && stringSearchTagValueOne.equals("")) {
 			String errorStr = "Please provide a complete key and value for tag 1.";
 			Alert error = new Alert(Alert.AlertType.ERROR, errorStr);
 			error.showAndWait();
@@ -655,11 +646,14 @@ public class SearchController {
 		}
 	}
 
+	/**
+	 * Checks to see if tag2 is partially provided
+	 * 
+	 * @return true if tag2 is incomplete, false otherwise
+	 */
 	public boolean checkSearchTag2NameValue() {
-		if (!stringSearchTagNameTwo.equals("")
-				&& stringSearchTagValueTwo.equals("")
-				|| stringSearchTagNameTwo.equals("")
-						&& !stringSearchTagValueTwo.equals("")) {
+		if (!stringSearchTagNameTwo.equals("") && stringSearchTagValueTwo.equals("")
+				|| stringSearchTagNameTwo.equals("") && !stringSearchTagValueTwo.equals("")) {
 			String errorStr = "Please provide a complete key and value for tag 2.";
 			Alert error = new Alert(Alert.AlertType.ERROR, errorStr);
 			error.showAndWait();
@@ -669,9 +663,13 @@ public class SearchController {
 		}
 	}
 
+	/**
+	 * Checks to see if tag2 is empty
+	 * 
+	 * @return true if tag2 is empty, false otherwise
+	 */
 	public boolean checkSearchTag2NameValueEmpty() {
-		if (stringSearchTagNameTwo.equals("")
-				&& stringSearchTagValueTwo.equals("")) {
+		if (stringSearchTagNameTwo.equals("") && stringSearchTagValueTwo.equals("")) {
 			String errorStr = "Please provide a complete key and value for tag 2.";
 			Alert error = new Alert(Alert.AlertType.ERROR, errorStr);
 			error.showAndWait();
@@ -681,6 +679,9 @@ public class SearchController {
 		}
 	}
 
+	/**
+	 * Resets radio buttons and booleans for and/or/not
+	 */
 	public void resetAndOrNot() {
 		searchTagNameTwo.setDisable(true);
 		searchTagValueTwo.setDisable(true);
@@ -696,6 +697,9 @@ public class SearchController {
 		searchNoConditional = true;
 	}
 
+	/**
+	 * Resets text fields for TagConditionals
+	 */
 	public void resetTextFields() {
 		searchTagNameOne.clear();
 		searchTagValueOne.clear();
@@ -708,6 +712,9 @@ public class SearchController {
 		stringSearchTagValueTwo = "";
 	}
 
+	/**
+	 * Launches actions for when radioButtonAnd is activated
+	 */
 	public void doRadioButtonAnd() {
 		if (radioButtonAnd.isSelected()) {
 			radioButtonOr.setSelected(false);
@@ -723,10 +730,11 @@ public class SearchController {
 		} else {
 			resetAndOrNot();
 		}
-
-		debugLog("[doRadioButtonAnd]");
 	}
 
+	/**
+	 * Launches actions for when radioButtonOr is activated
+	 */
 	public void doRadioButtonOr() {
 		if (radioButtonOr.isSelected()) {
 			radioButtonAnd.setSelected(false);
@@ -742,10 +750,11 @@ public class SearchController {
 		} else {
 			resetAndOrNot();
 		}
-
-		debugLog("[doRadioButtonOr]");
 	}
 
+	/**
+	 * Launches actions for when radioButtonNot is activated
+	 */
 	public void doRadioButtonNot() {
 		if (radioButtonNot.isSelected()) {
 			radioButtonAnd.setSelected(false);
@@ -761,10 +770,9 @@ public class SearchController {
 		} else {
 			resetAndOrNot();
 		}
-
-		debugLog("[doRadioButtonNot]");
 	}
 
+	/*
 	public void doSearchTagNameOne() {
 		debugLog("[doSearchTagNameOne]");
 
@@ -788,23 +796,25 @@ public class SearchController {
 
 		// searchTagValueTwo
 	}
+	*/
 
+	/**
+	 * Stores date (from) from DatePicker into a LocalDate
+	 */
 	public void doDatePickerFrom() {
-		debugLog("[doDatePickerFrom]");
-
 		dateFrom = datePickerFrom.getValue();
-
-		debugLog(dateFrom + " was retrieved");
 	}
 
+	/**
+	 * Stores date (to) from DatePicker into a LocalDate
+	 */
 	public void doDatePickerTo() {
-		debugLog("[doDatePickerTo]");
-
 		dateTo = datePickerTo.getValue();
-
-		debugLog(dateFrom + " was retrieved" + " (long value) ");
 	}
 
+	/**
+	 * Actions for when radioButtonThisAlbum is selected
+	 */
 	public void doRadioButtonThisAlbum() {
 		if (radioButtonThisAlbum.isSelected()) {
 			radioButtonSelectedAlbum.setSelected(false);
@@ -814,10 +824,11 @@ public class SearchController {
 			searchScopeSelectedAlbum = false;
 			searchScopeAllAlbums = false;
 		}
-
-		debugLog("[doRadioButtonThisAlbum]");
 	}
 
+	/**
+	 * Actions for when radioButtonSelectedAlbum is selected
+	 */
 	public void doRadioButtonSelectedAlbum() {
 		if (radioButtonSelectedAlbum.isSelected()) {
 			radioButtonThisAlbum.setSelected(false);
@@ -827,10 +838,11 @@ public class SearchController {
 			searchScopeThisAlbum = false;
 			searchScopeAllAlbums = false;
 		}
-
-		debugLog("[doRadioButtonSelectedAlbum]");
 	}
 
+	/**
+	 * Actions for when radioButtonAllAlbums is selected
+	 */
 	public void doRadioButtonAllAlbums() {
 		if (radioButtonAllAlbums.isSelected()) {
 			radioButtonThisAlbum.setSelected(false);
@@ -840,145 +852,111 @@ public class SearchController {
 			searchScopeThisAlbum = false;
 			searchScopeSelectedAlbum = false;
 		}
-
-		debugLog("[doRadioButtonAllAlbums]");
 	}
 
-	public void doViewModeThumbnail() {
-		if (radioButtonThumbnail.isSelected()) {
-			radioButtonSingleImage.setSelected(false);
+	/**
+	 * Launches Viewer window for when a photo is selected to be opened in a Viewer
+	 * 
+	 * @throws IOException if viewer.fxml is not found
+	 */
+	public void doOpenSelectedPhotoInViewer() throws IOException {
+		PhotoController.currentSelectedPhoto = null;
+		UserController.currentSelectedPhoto = null;
+		SearchController.currentSelectedPhoto = currentPhoto;
 
-			viewModeThumbnail = true;
-			viewModeSingleImage = false;
+		if (PhotoController.currentSelectedPhoto == null && UserController.currentSelectedPhoto == null
+				&& SearchController.currentSelectedPhoto == null) {
+			return;
 		}
 
-		debugLog("[doViewModeThumbnail]");
+		Stage window = new Stage();
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(getClass().getResource("/view/viewer.fxml"));
+		Parent root = loader.load();
+		Scene scene = new Scene(root);
+		window.setScene(scene);
+		window.setTitle("Photos -- Viewer");
+		window.setResizable(false);
+		window.show();
+
 	}
 
-	public void doViewModeSingleImage() {
-		if (radioButtonSingleImage.isSelected()) {
-			radioButtonThumbnail.setSelected(false);
-
-			viewModeSingleImage = true;
-			viewModeThumbnail = false;
-		}
-
-		debugLog("[doViewModeSingleImage]");
-	}
-
-	public void doOpenSelectedPhotoInViewer() {
-		debugLog("[doOpenSelectedPhotoInViewer]");
-	}
-
-	public void movePhoto() {
-		debugLog("Move photo button pressed");
-	}
-
-	public void copyPhoto() {
-		debugLog("Copy photo button pressed");
-	}
-
+	/**
+	 * Actions to delete a photo from the search results
+	 */
 	public void deletePhoto() {
 		if (currentPhoto != null) {
 			int selectedIndex = index;
 
 			if (selectedIndex < 0) {
-				Alert error = new Alert(Alert.AlertType.ERROR,
-						"There are no photos to be deleted.", ButtonType.OK);
-
-				/**
-				 * CONSOLE DIAGNOSTICS
-				 */
-				debugLog("There are no photos to be deleted.");
+				Alert error = new Alert(Alert.AlertType.ERROR, "There are no photos to be deleted.", ButtonType.OK);
 
 				error.showAndWait();
 				return;
 			}
 
-			Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
-					"Are you sure you want to delete this photo?",
-					ButtonType.YES, ButtonType.NO);
+			if (checkBoxPromptBeforeDelete.isSelected()) {
+				Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this photo?",
+						ButtonType.YES, ButtonType.NO);
+				alert.showAndWait();
 
-			alert.showAndWait();
-
-			/**
-			 * User no longer wants to delete the selected album
-			 */
-			if (alert.getResult() != ButtonType.YES) {
-				/**
-				 * CONSOLE DIAGNOSTICS
-				 */
-				debugLog("Quit from deleting photo.");
-				return;
+				if (alert.getResult() != ButtonType.YES) {
+					return;
+				}
 			}
 
 			/**
 			 * Photo is found within list
 			 */
 			if (selectedIndex >= 0) {
-				debugLog("Selected Index (Photo to be deleted): "
-						+ selectedIndex);
-				currentAlbum.deletePhoto(selectedIndex);
-
-				Alert success = new Alert(Alert.AlertType.CONFIRMATION,
-						"Photo successfully removed!", ButtonType.OK);
+				Alert success = new Alert(Alert.AlertType.CONFIRMATION, "Photo successfully removed!", ButtonType.OK);
 
 				tilePaneImages.getChildren().remove(selectedIndex);
 
-				/**
-				 * CONSOLE DIAGNOSTICS
-				 */
-				debugLog("Photo successfully removed!");
+				photoListSearchResults.remove(selectedIndex);
 
 				updateInfoData();
 
 				success.showAndWait();
 			}
 		} else {
-			Alert error = new Alert(AlertType.ERROR,
-					"Please select a photo to delete.", ButtonType.OK);
-
-			debugLog("ERROR: Please select a photo.");
-
+			Alert error = new Alert(AlertType.ERROR, "Please select a photo to delete.", ButtonType.OK);
 			error.showAndWait();
 		}
 
 	}
 
+	/*
 	public void doCheckBoxDeleteFromDisk() {
 		deleteFromDisk = deleteFromDisk ? false : true;
 
-		debugLog("Delete from disk checked -- delete from disk enabled: "
-				+ deleteFromDisk);
+		debugLog("Delete from disk checked -- delete from disk enabled: " + deleteFromDisk);
 	}
+	*/
 
+	/**
+	 * Actions for promptBeforeDelete
+	 */
 	public void doCheckBoxPromptBeforeDelete() {
 		promptBeforeDelete = promptBeforeDelete ? false : true;
-
-		debugLog(
-				"Prompt before delete checked -- prompt before delete enabled: "
-						+ promptBeforeDelete);
 	}
+	
 
+	/**
+	 * Removes tag from an existing photo
+	 */
 	public void removeTag() {
 		int selectedIndex = tagList.getSelectionModel().getSelectedIndex();
 
 		if (selectedIndex < 0) {
-			Alert error = new Alert(Alert.AlertType.ERROR,
-					"There are no tags to be deleted.", ButtonType.OK);
-
-			/**
-			 * CONSOLE DIAGNOSTICS
-			 */
-			debugLog("There are no tags to be deleted.");
+			Alert error = new Alert(Alert.AlertType.ERROR, "There are no tags to be deleted.", ButtonType.OK);
 
 			error.showAndWait();
 			return;
 		}
 
-		Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
-				"Are you sure you want to delete this tag?", ButtonType.YES,
-				ButtonType.NO);
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this tag?",
+				ButtonType.YES, ButtonType.NO);
 
 		alert.showAndWait();
 
@@ -986,10 +964,6 @@ public class SearchController {
 		 * User no longer wants to delete the selected tag
 		 */
 		if (alert.getResult() != ButtonType.YES) {
-			/**
-			 * CONSOLE DIAGNOSTICS
-			 */
-			debugLog("Quit from deleting tag.");
 			return;
 		}
 
@@ -997,17 +971,10 @@ public class SearchController {
 		 * Tag is found within list
 		 */
 		if (selectedIndex >= 0) {
-			debugLog("Selected Index (tag to be deleted): " + selectedIndex);
 			currentPhoto.deleteTag(selectedIndex);
 
-			Alert success = new Alert(Alert.AlertType.CONFIRMATION,
-					"Tag successfully removed!", ButtonType.OK);
-
-			/**
-			 * CONSOLE DIAGNOSTICS
-			 */
-			debugLog("ATag successfully removed!");
-
+			Alert success = new Alert(Alert.AlertType.CONFIRMATION, "Tag successfully removed!", ButtonType.OK);
+ 
 			success.showAndWait();
 		}
 	}
@@ -1018,24 +985,84 @@ public class SearchController {
 	 * @throws IOException if add_album.fxml not found
 	 */
 	public void doAddAlbum() throws IOException {
-		/*
-		 * Stage window = new Stage(); FXMLLoader loader = new FXMLLoader();
-		 * 
-		 * loader.setLocation(getClass().getResource("/view/add_album.fxml"));
-		 * loader.setController(this);
-		 * 
-		 * Parent root = loader.load();
-		 * 
-		 * window.initModality(Modality.APPLICATION_MODAL); Scene scene = new
-		 * Scene(root);
-		 * 
-		 * window.setScene(scene); window.setTitle("Photos -- Add Album");
-		 * window.setResizable(false); window.show();
-		 * 
-		 * updateInfoData();
-		 */
+		Stage window = new Stage();
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(getClass().getResource("/view/add_album.fxml"));
+		loader.setController(this);
+		Parent root = loader.load();
+		window.initModality(Modality.APPLICATION_MODAL);
+		Scene scene = new Scene(root);
+		window.setScene(scene);
+		window.setTitle("Photos -- Add Album");
+		window.setResizable(false);
+		window.show();
+		updateInfoData();
+	}
 
-		debugLog("[doAddAlbum] (from results)");
+	/**
+	 * Executes upon creating an album
+	 */
+	public void doCreate() {
+		if (createAlbumName.getText().isEmpty() == false) {
+			String albumName = createAlbumName.getText().trim();
+
+			if (currentUser.addAlbum(albumName) == -1) {
+				Alert duplicate = new Alert(Alert.AlertType.ERROR, "Duplicate album found. Album not added!",
+						ButtonType.OK);
+
+				duplicate.showAndWait();
+			} else {
+
+				currentUser.setCurrentAlbum(albumName);
+
+				createAlbumName.getScene().getWindow().hide();
+
+				updateInfoData();
+
+				Alert success = new Alert(Alert.AlertType.CONFIRMATION, "Album successfully added!", ButtonType.OK);
+				success.showAndWait();
+				addSelectedPhotos();
+
+				tilePaneImages.getChildren().clear();
+				photoListSearchResults.clear();
+			}
+		} else {
+			Alert error = new Alert(AlertType.ERROR, "Please provide an album name.", ButtonType.OK);
+			error.showAndWait();
+		}
+	}
+
+	/**
+	 * This goes through the imageQueueList (ListView<User>) and adds the photos to
+	 * the current album or selected album.
+	 */
+	public void addSelectedPhotos() {
+		Album currentAlbum = model.getCurrentUser().getCurrentAlbum();
+		currentAlbum.setPhotoList(photoListSearchResults);
+
+		if (currentAlbum != null) {
+			for (int i = 0; i < photoListSearchResults.size(); i++) {
+
+				Photo p = photoListSearchResults.get(i);
+
+				currentAlbum.addPhoto(p);
+
+				if (p.getTagList().isEmpty() == false) {
+					for (Tag t : p.getTagList()) {
+						currentAlbum.getPhotoMap().get(p.getKey()).addTag(t.getTagName(), t.getTagValue());
+					}
+				}
+			}
+		}
+
+		tagName.setText(null);
+		tagValue.setText(null);
+
+		if (!tagList.getItems().isEmpty()) {
+			tList.clear();
+		}
+
+		model.write();
 	}
 
 	/**
@@ -1051,12 +1078,10 @@ public class SearchController {
 
 			for (Photo p : a.getPhotoMap().values()) {
 				totalByteCount += p.getFileSize();
-				debugLog("" + totalByteCount);
 			}
 		}
 
-		String output = String.format("%d albums - %d photos - %d KB",
-				albumCount, totalPhotoCount, totalByteCount);
+		String output = String.format("%d albums - %d photos - %d KB", albumCount, totalPhotoCount, totalByteCount);
 
 		infoData.setText(output);
 	}
@@ -1066,27 +1091,15 @@ public class SearchController {
 	 */
 	public void createTag() {
 		if (currentPhoto != null) {
-			if (tagName.getText().isEmpty() == false
-					&& tagValue.getText().isEmpty() == false) {
+			if (tagName.getText().isEmpty() == false && tagValue.getText().isEmpty() == false) {
 				/**
 				 * SCENARIO 1: tagName and tagValue are not empty
 				 */
-				if (currentPhoto.addTag(tagName.getText().trim(),
-						tagValue.getText().trim()) == -1) {
+				if (currentPhoto.addTag(tagName.getText().trim(), tagValue.getText().trim()) == -1) {
 					/**
 					 * SCENARIO 1a: tag entered already exists
 					 */
-					Alert error = new Alert(AlertType.ERROR,
-							"Duplicate tag found. Tag not added!",
-							ButtonType.OK);
-
-					/**
-					 * CONSOLE DIAGNOSTICS
-					 */
-					debugLog("Duplicate tag found. Tag not added!");
-
-					debugLog(tagName.getText().trim() + " "
-							+ tagValue.getText().trim());
+					Alert error = new Alert(AlertType.ERROR, "Duplicate tag found. Tag not added!", ButtonType.OK);
 
 					error.showAndWait();
 				} else {
@@ -1094,11 +1107,7 @@ public class SearchController {
 					 * SCENARIO 1b: tag entered does not exist
 					 */
 
-					Alert success = new Alert(Alert.AlertType.CONFIRMATION,
-							"Tag successfully added!", ButtonType.OK);
-
-					debugLog("Tag " + tagName.getText()
-							+ " was successfully added!");
+					Alert success = new Alert(Alert.AlertType.CONFIRMATION, "Tag successfully added!", ButtonType.OK);
 
 					success.showAndWait();
 				}
@@ -1106,20 +1115,12 @@ public class SearchController {
 				/**
 				 * SCENARIO 2: either tagName or tagValue or both are empty
 				 */
-				Alert error = new Alert(AlertType.ERROR,
-						"Please provide a tag name and value.", ButtonType.OK);
-
-				debugLog("ERROR: Please provide a tag name and value.");
+				Alert error = new Alert(AlertType.ERROR, "Please provide a tag name and value.", ButtonType.OK);
 
 				error.showAndWait();
 			}
 		} else {
-			Alert error = new Alert(AlertType.ERROR,
-					"Please select a photo to create a tag for.",
-					ButtonType.OK);
-
-			debugLog("ERROR: Please select a photo.");
-
+			Alert error = new Alert(AlertType.ERROR, "Please select a photo to create a tag for.", ButtonType.OK);
 			error.showAndWait();
 		}
 	}
@@ -1136,32 +1137,16 @@ public class SearchController {
 				currentPhoto.setCaption(captionField.getText().trim());
 				displayCaption.setText(captionField.getText().trim());
 
-				/**
-				 * CONSOLE DIAGNOSTICS
-				 */
-				debugLog(
-						"caption - \"" + captionField.getText() + "\" was set");
 			} else {
 				/**
 				 * SCENARIO 2: captionField is an empty string.
 				 */
-				Alert error = new Alert(AlertType.ERROR,
-						"Please provide a caption.", ButtonType.OK);
-
-				/**
-				 * CONSOLE DIAGNOSTICS
-				 */
-				debugLog("caption provided was an empty string.");
+				Alert error = new Alert(AlertType.ERROR, "Please provide a caption.", ButtonType.OK);
 
 				error.showAndWait();
 			}
 		} else {
-			Alert error = new Alert(AlertType.ERROR,
-					"Please select a photo to create a caption for.",
-					ButtonType.OK);
-
-			debugLog("ERROR: Please select a photo.");
-
+			Alert error = new Alert(AlertType.ERROR, "Please select a photo to create a caption for.", ButtonType.OK);
 			error.showAndWait();
 		}
 	}
@@ -1214,38 +1199,53 @@ public class SearchController {
 		window.show();
 	}
 
+	/**
+	 * Saves photos.dat and logs the user out
+	 * 
+	 * @throws IOException if login.fxml is not found
+	 */
 	public void doLogOut() throws IOException {
-		// model.write();
-
-		Parent login = FXMLLoader
-				.load(getClass().getResource("/view/login.fxml"));
+		model.write();
+		
+		Parent login = FXMLLoader.load(getClass().getResource("/view/login.fxml"));
 		Scene loginScene = new Scene(login);
-		// Stage currentStage = (Stage) (imageQueueList.getScene().getWindow());
+		Stage currentStage = (Stage) (tilePaneImages.getScene().getWindow());
 
-		// currentStage.hide();
-		// currentStage.setScene(loginScene);
-		// currentStage.setTitle("Photos -- V1.0");
-		// currentStage.show();
+		currentStage.hide();
+		currentStage.setScene(loginScene);
+		currentStage.setTitle("Photos -- V1.0");
+		currentStage.show();
+		
 	}
 
+	/**
+	 * Terminates the program.
+	 */
 	public void doQuit() {
 		LoginController.exit();
 	}
 
+	/**
+	 * Return to user/album view from Search
+	 * 
+	 * @throws IOException if user.fxml is not found
+	 */
 	public void doAlbum() throws IOException {
-		/*
-		 * Stage window = new Stage(); FXMLLoader loader = new FXMLLoader();
-		 * 
-		 * loader.setLocation(getClass().getResource("/view/user.fxml")); Parent
-		 * root = loader.load(); Scene scene = new Scene(root);
-		 * addAlbumHL.getScene().getWindow().hide(); window.setScene(scene);
-		 * window.setTitle("Photos -- Import"); window.setResizable(false);
-		 * window.show();
-		 */
-
-		debugLog("doAlbum");
+		Stage window = new Stage();
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(getClass().getResource("/view/user.fxml"));
+		Parent root = loader.load();
+		Scene scene = new Scene(root);
+		tagList.getScene().getWindow().hide();
+		window.setScene(scene);
+		window.setTitle("Photos V1.0 - Welcome " + model.getCurrentUser().getUsername());
+		window.setResizable(false);
+		window.show();
 	}
 
+	/**
+	 * Actions for zoom slider
+	 */
 	public void doZoomSlider() {
 		if (currentAlbum == null || currentImageViewList == null) {
 			return;
@@ -1254,8 +1254,7 @@ public class SearchController {
 		zoomSlider.valueProperty().addListener(new ChangeListener<Number>() {
 
 			@Override
-			public void changed(ObservableValue<? extends Number> observable,
-					Number oldValue, Number newValue) {
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 				double factor = newValue.doubleValue();
 
 				imageInsetValue = factor * DEFAULT_INSET_VALUE; // default 10.00
@@ -1269,17 +1268,16 @@ public class SearchController {
 					iv.setFitWidth(imageWidthValue);
 					iv.setPreserveRatio(true);
 				}
-
-				debugLog("" + newValue.doubleValue());
-
-				debugLog(imageInsetValue + " inset");
-				debugLog(imageHeightValue + " height");
-				debugLog(imageWidthValue + " width");
 			}
 
 		});
 	}
 
+	/**
+	 * Sets the global index that represents the current photo selected
+	 * 
+	 * @param selectedIndex represents selectedIndex
+	 */
 	private void setSelectedIndex(int selectedIndex) {
 		index = selectedIndex;
 	}
@@ -1309,8 +1307,8 @@ public class SearchController {
 
 			System.out.println(currentAlbum.getAlbumSize());
 			/**
-			 * Establish new index. If current index equals 0, set the index to
-			 * the last index of the currentImageViewList. (loop to end)
+			 * Establish new index. If current index equals 0, set the index to the last
+			 * index of the currentImageViewList. (loop to end)
 			 * 
 			 * Otherwise, decrement index by one to go the previous image.
 			 */
@@ -1328,31 +1326,27 @@ public class SearchController {
 			}
 
 			/**
-			 * Add an event filter for navigatorButtonBack, for when the primary
-			 * mouse button is pressed.
+			 * Add an event filter for navigatorButtonBack, for when the primary mouse
+			 * button is pressed.
 			 */
 			navigatorButtonBack.addEventFilter(MouseEvent.MOUSE_PRESSED, e -> {
 				if (e.isPrimaryButtonDown()) {
-					debugLog(
-							"[navigatorButtonBack] Selected index field reads: "
-									+ index);
-
 					old.setStyle(null);
 					if (iv.getBoundsInParent() != null) {
-						iv.setStyle(
-								"-fx-effect: innershadow(gaussian, #039ed3, 4, 2.0, 0, 0);");
+						iv.setStyle("-fx-effect: innershadow(gaussian, #039ed3, 4, 2.0, 0, 0);");
 					}
 
 					/**
 					 * Retrieve the current photo based on the current index
 					 */
-					currentPhoto = photoList.get(index);
+					// currentPhoto = photoList.get(index);
+					currentPhoto = photoListSearchResults.get(index);
+					currentSelectedPhoto = currentPhoto;
 
 					/**
 					 * Update selected image in detail pane
 					 */
-					detailView.setImage(
-							currentImageViewList.get(index).getImage());
+					detailView.setImage(currentImageViewList.get(index).getImage());
 					detailView.setFitHeight(150);
 					detailView.setFitWidth(200);
 					detailView.setVisible(true);
@@ -1372,14 +1366,12 @@ public class SearchController {
 					sizeField.setText("(size)" + " KB");
 					createdField.setText(currentPhoto.getDatePhoto());
 
-					ObservableList<Tag> tList = FXCollections
-							.observableArrayList();
+					ObservableList<Tag> tList = FXCollections.observableArrayList();
 
 					/**
 					 * Update tags in image detail pane
 					 */
-					for (Map.Entry<String, Tag> tag : currentPhoto.getTagMap()
-							.entrySet()) {
+					for (Map.Entry<String, Tag> tag : currentPhoto.getTagMap().entrySet()) {
 						tList.add(tag.getValue());
 					}
 
@@ -1388,17 +1380,6 @@ public class SearchController {
 
 				}
 			});
-
-			/**
-			 * CONSOLE DIAGNOSTICS
-			 */
-			debugLog("[navigatorButtonBack] Image " + currentPhoto.getFilename()
-					+ " was selected");
-
-			/**
-			 * CONSOLE DIAGNOSTICS
-			 */
-			debugLog("Clicked navigator button back");
 		} else {
 
 		}
@@ -1427,9 +1408,9 @@ public class SearchController {
 		 */
 		if (currentAlbum.getAlbumSize() != 0 && currentAlbum != null) {
 			/**
-			 * Establish new index. If current index equals the
-			 * currentImageViewList size, minus 1 (new index == last index),
-			 * then set the index to zero. (loop to beginning)
+			 * Establish new index. If current index equals the currentImageViewList size,
+			 * minus 1 (new index == last index), then set the index to zero. (loop to
+			 * beginning)
 			 * 
 			 * Otherwise, increment index by one to go to the next image.
 			 */
@@ -1447,31 +1428,27 @@ public class SearchController {
 			}
 
 			/**
-			 * Add an event filter for navigatorButtonNext, for when the primary
-			 * mouse button is pressed.
+			 * Add an event filter for navigatorButtonNext, for when the primary mouse
+			 * button is pressed.
 			 */
 			navigatorButtonNext.addEventFilter(MouseEvent.MOUSE_PRESSED, e -> {
 				if (e.isPrimaryButtonDown()) {
-					debugLog(
-							"[navigatorButtonNext] Selected index field reads: "
-									+ index);
-
 					old.setStyle(null);
 					if (iv.getBoundsInParent() != null) {
-						iv.setStyle(
-								"-fx-effect: innershadow(gaussian, #039ed3, 4, 2.0, 0, 0);");
+						iv.setStyle("-fx-effect: innershadow(gaussian, #039ed3, 4, 2.0, 0, 0);");
 					}
 
 					/**
 					 * Retrieve the current photo based on the current index
 					 */
-					currentPhoto = photoList.get(index);
+					// currentPhoto = photoList.get(index);
+					currentPhoto = photoListSearchResults.get(index);
+					currentSelectedPhoto = currentPhoto;
 
 					/**
 					 * Update selected image in detail pane
 					 */
-					detailView.setImage(
-							currentImageViewList.get(index).getImage());
+					detailView.setImage(currentImageViewList.get(index).getImage());
 					detailView.setFitHeight(150);
 					detailView.setFitWidth(200);
 					detailView.setVisible(true);
@@ -1491,14 +1468,12 @@ public class SearchController {
 					sizeField.setText("(size)" + " KB");
 					createdField.setText(currentPhoto.getDatePhoto());
 
-					ObservableList<Tag> tList = FXCollections
-							.observableArrayList();
+					ObservableList<Tag> tList = FXCollections.observableArrayList();
 
 					/**
 					 * Update tags in image detail pane
 					 */
-					for (Map.Entry<String, Tag> tag : currentPhoto.getTagMap()
-							.entrySet()) {
+					for (Map.Entry<String, Tag> tag : currentPhoto.getTagMap().entrySet()) {
 						tList.add(tag.getValue());
 					}
 
@@ -1507,19 +1482,15 @@ public class SearchController {
 
 				}
 			});
-
-			/**
-			 * CONSOLE DIAGNOSTICS
-			 */
-			debugLog("[navigatorButtonNext] Image " + currentPhoto.getFilename()
-					+ " was selected");
-
-			/**
-			 * CONSOLE DIAGNOSTICS
-			 */
-			debugLog("Clicked navigator button next");
 		}
 
+	}
+
+	/**
+	 * Closes the current window.
+	 */
+	public void doCancel() {
+		cancelButton.getScene().getWindow().hide();
 	}
 
 	/**
@@ -1528,7 +1499,6 @@ public class SearchController {
 	 * @param message String that denotes a message for the console
 	 */
 	public void debugLog(String message) {
-		System.out.println(
-				"[" + this.getClass().getSimpleName() + "] " + message);
+		System.out.println("[" + this.getClass().getSimpleName() + "] " + message);
 	}
 }

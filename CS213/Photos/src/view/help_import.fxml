@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--help.fxml-->
+<!--Copyright (c) 2019 Gemuele Aludino, Patrick Nogaj.-->
+<!--All rights reserved.-->
+<!--Rutgers University: School of Arts and Sciences-->
+<!--01:198:213 Software Methodology, Spring 2019-->
+<!--Professor Seshadri Venugopal-->
+
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="559.0" prefWidth="396.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TextArea editable="false" layoutX="47.0" layoutY="50.0" prefHeight="135.0" prefWidth="300.0" text="Select current album to import to the current &#10;album from previous window.&#10;Selected Album from dropdown will import to &#10;the album selected from there.&#10;&#10;This is your import destination for the photos to be imported.">
+         <font>
+            <Font size="11.0" />
+         </font>
+      </TextArea>
+      <TextArea editable="false" layoutX="46.0" layoutY="220.0" prefHeight="135.0" prefWidth="300.0" text="These are the tags that will be&#10;added to the current photo selected&#10;upon importing to the album.&#10;&#10;Tag add goes as follows:&#10;KEY :: VALUE">
+         <font>
+            <Font size="11.0" />
+         </font>
+      </TextArea>
+      <TextArea editable="false" layoutX="48.0" layoutY="390.0" prefHeight="135.0" prefWidth="300.0" text="Press this button to add photos to&#10;the desired album. It will prompt you&#10;with a success message if all photos&#10;were able to be added successfully. If&#10;not, you will be notified as well.">
+         <font>
+            <Font size="11.0" />
+         </font>
+      </TextArea>
+      <Text layoutX="48.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IMPORT DESTINATION" />
+      <Text layoutX="48.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TAGS PROVIDED" />
+      <Text layoutX="48.0" layoutY="386.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IMPORT SELECTION INTO ALBUM" />
+   </children>
+</AnchorPane>

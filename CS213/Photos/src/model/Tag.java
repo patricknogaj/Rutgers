@@ -26,8 +26,8 @@ public class Tag implements Comparable<Tag>, Serializable {
 	private String tagValue;
 
 	/**
-	 * Constructor that tags a tagName and tagValue field and sets it to the
-	 * private fields.
+	 * Constructor that tags a tagName and tagValue field and sets it to the private
+	 * fields.
 	 */
 	public Tag(String tagName, String tagValue) {
 		this.tagName = tagName;
@@ -36,26 +36,31 @@ public class Tag implements Comparable<Tag>, Serializable {
 
 	/**
 	 * An overloaded constructor which accepts an Tag object.
+	 * 
 	 * @param takes a Tag object and sets the fields accordingly.
 	 */
 	public Tag(Tag t) {
 		tagName = t.tagName;
 		tagValue = t.tagValue;
 	}
-	
+
 	/**
-	 * Generates a Key by taking the parameters and forcing them to be lowercased to ensure proper constraints.
-	 * @param tagName : String object of the tag name of a Tag
+	 * Generates a Key by taking the parameters and forcing them to be lowercased to
+	 * ensure proper constraints.
+	 * 
+	 * @param tagName  : String object of the tag name of a Tag
 	 * @param tagValue : String object of the tag value of a Tag
 	 * @return : String object of the Tag which is lowercased for constraints.
 	 */
 	public static String makeKey(String tagName, String tagValue) {
 		return (tagName + tagValue).toLowerCase();
 	}
-	
+
 	/**
 	 * Gets the key by generating the key of a Tag.
-	 * @return a String object which is the key to utilize in TreeMap<String, Tag> in Photo.
+	 * 
+	 * @return a String object which is the key to utilize in TreeMap<String, Tag>
+	 *         in Photo.
 	 */
 	public String getKey() {
 		return makeKey(tagName, tagValue);
@@ -63,6 +68,7 @@ public class Tag implements Comparable<Tag>, Serializable {
 
 	/**
 	 * Returns the tag name of a Tag.
+	 * 
 	 * @return tagName field
 	 */
 	public String getTagName() {
@@ -71,12 +77,13 @@ public class Tag implements Comparable<Tag>, Serializable {
 
 	/**
 	 * Returns the tag value of a Tag.
+	 * 
 	 * @return tagValue field
 	 */
 	public String getTagValue() {
 		return tagValue;
 	}
-	
+
 	/**
 	 * @param Takes in a tag object to compare with
 	 * @return a value based to see if the tag names are equal, if false it will
@@ -84,16 +91,15 @@ public class Tag implements Comparable<Tag>, Serializable {
 	 */
 	@Override
 	public int compareTo(Tag other) {
-		return (this.tagName.compareTo(other.tagName) != 0)
-				? this.tagName.compareTo(other.tagName)
+		return (this.tagName.compareTo(other.tagName) != 0) ? this.tagName.compareTo(other.tagName)
 				: this.tagValue.compareToIgnoreCase(other.tagValue);
 	}
-	
+
 	@Override
 	public boolean equals(Object o) {
 		if (o != null && o instanceof Tag) {
-			Tag t = (Tag)(o);
-			
+			Tag t = (Tag) (o);
+
 			if (tagName.equals(t.tagName) && tagValue.equals(t.tagValue)) {
 				return true;
 			} else {
@@ -103,7 +109,7 @@ public class Tag implements Comparable<Tag>, Serializable {
 			return false;
 		}
 	}
-	
+
 	@Override
 	public String toString() {
 		return tagName + " :: " + tagValue;

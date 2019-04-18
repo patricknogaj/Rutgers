@@ -28,7 +28,6 @@ import javafx.collections.ObservableList;
  * @version Apr 12, 2019
  * @author Patrick Nogaj
  */
-
 public class Album implements Comparable<Album>, Serializable {
 
 	private static final long serialVersionUID = -6862414900620876387L;
@@ -37,12 +36,13 @@ public class Album implements Comparable<Album>, Serializable {
 
 	private long min;
 	private long max;
-	
+
 	private transient ObservableList<Photo> photoList;
 	private TreeMap<String, Photo> photoMap;
 
 	/**
 	 * Constructor which takes an album name and creates a new Album object.
+	 * 
 	 * @param albumName: String containing name of Album
 	 */
 	public Album(String albumName) {
@@ -53,13 +53,14 @@ public class Album implements Comparable<Album>, Serializable {
 
 	/**
 	 * Adds a Photo object to the TreeMap<String, Photo> in order.
+	 * 
 	 * @param photo: Photo object
 	 */
 	public int addPhoto(Photo photo) {
 		String photoKey = Photo.makeKey(photo.getFilepath());
 		Photo temp = photoMap.get(photoKey);
-		
-		if(temp == null) {
+
+		if (temp == null) {
 			temp = new Photo(photo.getFilepath());
 			photoMap.put(photoKey, temp);
 			return indexInsertedSorted(temp);
@@ -67,10 +68,13 @@ public class Album implements Comparable<Album>, Serializable {
 			return -1;
 		}
 	}
-	
+
 	/**
 	 * Inserts the Photo in a sorted way by utilizing the Photo compareTo().
-	 * @param photo: an Photo object to compare with the rest of the Photos in the ObservableList<Photo>.
+	 * 
+	 * @param photo: an Photo object to compare with the rest of the Photos in the
+	 *        ObservableList<Photo>.
+	 * 
 	 * @return the index of where it was placed in the ObservableList<Photo>.
 	 */
 	private int indexInsertedSorted(Photo photo) {
@@ -88,17 +92,21 @@ public class Album implements Comparable<Album>, Serializable {
 			return photoList.size() - 1;
 		}
 	}
-	
+
 	/**
-	 * Deletes the Photo object from the ObservableList<Photo> and TreeMap<String, Photo>.
-	 * @param index: index of where Photo is in List/Map derived from UserController.
-	 * @return true | false if Photo was deleted.
+	 * Deletes the Photo object from the ObservableList<Photo> and TreeMap<String,
+	 * Photo>.
+	 * 
+	 * @param index: index of where Photo is in List/Map derived from
+	 *        UserController.
+	 * 
+	 * @return true | false if Photo was deleted
 	 */
 	public boolean deletePhoto(int index) {
 		String key = photoList.get(index).getKey();
 		Photo temp = photoMap.get(key);
-		
-		if(temp != null) {
+
+		if (temp != null) {
 			photoMap.remove(key);
 			photoList.remove(index);
 			return true;
@@ -106,21 +114,21 @@ public class Album implements Comparable<Album>, Serializable {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Determines the earliest and latest photos within an album.
 	 */
-    @SuppressWarnings("unused")
+	@SuppressWarnings("unused")
 	public void setCounterDatetime() {
 		boolean start = true;
 		int count = 0;
 		long min = 0;
 		long max = 0;
-		for (Map.Entry<String, Photo> p: photoMap.entrySet()) {
+		for (Map.Entry<String, Photo> p : photoMap.entrySet()) {
 			if (start) {
 				count = 1;
-				min	= p.getValue().getModifiedDate();
-				max	= p.getValue().getModifiedDate();
+				min = p.getValue().getModifiedDate();
+				max = p.getValue().getModifiedDate();
 				start = false;
 			} else {
 				count++;
@@ -136,46 +144,56 @@ public class Album implements Comparable<Album>, Serializable {
 		this.min = min;
 		this.max = max;
 	}
-	
-    /**
-     * Converts long gathered from date modified() and converts it into a readable format.
-     * @param time: long objected extracted from File.dateModified()
-     * @return LocalDateTime object in format: YYYY-MM-DD
-     */
-    public static String epochToLocalTime(long time) {
-        LocalDateTime datetime = LocalDateTime.ofInstant(Instant.ofEpochMilli(time), ZoneId.systemDefault());
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        return datetime.format(formatter);
-    }
-    
+
 	/**
+	 * Converts long gathered from date modified() and converts it into a readable
+	 * format.
 	 * 
-	 * @param albumName
-	 * @return
+	 * @param time: long objected extracted from File.dateModified()
+	 * 
+	 * @return LocalDateTime object in format: YYYY-MM-DD
+	 */
+	public static String epochToLocalTime(long time) {
+		LocalDateTime datetime = LocalDateTime.ofInstant(Instant.ofEpochMilli(time), ZoneId.systemDefault());
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		return datetime.format(formatter);
+	}
+
+	/**
+	 * Creates a key for a Photo given a String albumName
+	 * 
+	 * @param albumName String that represents the albumName from which a Photo
+	 *                  belongs
+	 * 
+	 * @return the param albumName in lowercase
 	 */
 	public static String makeKey(String albumName) {
 		return albumName.toLowerCase();
 	}
-	
+
 	/**
 	 * Gets the album name of the current Album object.
+	 * 
 	 * @return String containing album name.
 	 */
 	public String getAlbumName() {
 		return albumName;
 	}
-	
+
 	/**
 	 * Generates the key for the current Album object.
+	 * 
 	 * @return String of album name lowercased to ensure constraints.
 	 */
 	public String getKey() {
 		return makeKey(albumName);
 	}
-	
+
 	/**
 	 * Returns the index of where the Photo is located in the ObservableList<Photo>
+	 * 
 	 * @param photo: Photo object
+	 * 
 	 * @return index of Photo in ObservableList<Photo>.
 	 */
 	public int getSelectedPhoto(Photo photo) {
@@ -184,38 +202,43 @@ public class Album implements Comparable<Album>, Serializable {
 
 	/**
 	 * Gets the Album size by grabbing size() from TreeMap<String, Photo>
+	 * 
 	 * @return size of TreeMap<String, Photo>
 	 */
 	public int getAlbumSize() {
 		return photoMap.size();
 	}
-	
+
 	/**
 	 * Gets the minimum date range of the current Album
+	 *
 	 * @return min: long
 	 */
-	public long getMin() { 
-        return min;
-    }
+	public long getMin() {
+		return min;
+	}
 
 	/**
 	 * Gets the maximum date range of the current Album
+	 * 
 	 * @return max: long
 	 */
-    public long getMax() {
-        return max;
-    }
+	public long getMax() {
+		return max;
+	}
 
 	/**
 	 * Gets the ObservableList<Photo> from the Album object.
+	 * 
 	 * @return ObservableList<Photo>
 	 */
 	public ObservableList<Photo> getPhotoList() {
 		return photoList;
 	}
-	
+
 	/**
 	 * Gets the TreeMap<String, Photo> of the Album object.
+	 * 
 	 * @return TreeMap<String, Photo>
 	 */
 	public TreeMap<String, Photo> getPhotoMap() {
@@ -224,6 +247,7 @@ public class Album implements Comparable<Album>, Serializable {
 
 	/**
 	 * Sets the PhotoList to a new ObservableList<Photo>
+	 * 
 	 * @param photoList: ObservableList<Photo>
 	 */
 	public void setPhotoList(ObservableList<Photo> photoList) {
@@ -232,27 +256,35 @@ public class Album implements Comparable<Album>, Serializable {
 
 	/**
 	 * Sets the Album name to the new Album name.
+	 * 
 	 * @param albumName: String containing new Album name.
 	 */
 	public void setAlbumName(String albumName) {
 		this.albumName = albumName;
 	}
-	
+
 	@Override
 	public int compareTo(Album other) {
 		return this.albumName.compareToIgnoreCase(other.albumName);
 	}
-	
+
+	@Override
 	public boolean equals(Object o) {
-		if(o == null || !(o instanceof Album)) {
+		if (o == null || !(o instanceof Album)) {
 			return false;
-		}	
+		}
 		Album other = (Album) o;
 		return (this.albumName.equalsIgnoreCase(other.albumName));
 	}
-	
+
+	@Override
 	public String toString() {
 		return "Album name: " + albumName + "\nPhoto count: " + photoMap.size() + "\nRanges from: " + epochToLocalTime(min) + " to " + epochToLocalTime(max);
+		
+		/*
+		return String.format("\"%s\", %d photos\nfrom %s to %s", albumName, photoMap.size(), epochToLocalTime(min),
+				epochToLocalTime(max));
+				*/
 	}
 
 }

@@ -26,6 +26,11 @@ import javafx.stage.Stage;
  */
 public class Photos extends Application {
 	
+	/**
+	 * main calls start based on Application, and launches the login.FXML
+	 * 
+	 * @throws Exception if login.fxml is not found.
+	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		FXMLLoader loader = new FXMLLoader();
@@ -41,6 +46,7 @@ public class Photos extends Application {
 	
 	/**
 	 * Program execution begins here.
+	 * 
 	 * @param args Command line arguments
 	 */
 	public static void main(String[] args) {
