@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">chess22</string>
+    <string name="play">play</string>
+    <string name="loadgame">load game</string>
+    <string name="settings">settings</string>
+    <string name="draw">Draw?</string>
+    <string name="ai">AI</string>
+    <string name="undo">UnDo</string>
+    <string name="drawBtn">Draw</string>
+    <string name="resign">Resign</string>
+</resources>
