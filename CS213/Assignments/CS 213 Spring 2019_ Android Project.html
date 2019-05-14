@@ -1,0 +1,161 @@
+
+<!-- saved from url=(0089)https://www.cs.rutgers.edu/courses/213/classes/spring_2019_venugopal/android/android.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+<title>CS 213 Spring 2019: Android Project</title>
+<style>
+body { font: 14px Trebuchet MS; }
+a, a:visited { color: blue; }
+pre, code { color: blue; }
+div.teamwork { border: 1px solid yellow; background: blue;
+color: yellow; font-weight: bold; padding: 3px;}
+span.alert { font-weight: bold; color:red;}
+span.pts { color: red; }
+</style>
+</head><body>
+<center>
+<h2>CS 213 Spring 2019: Android Project</h2>
+<h2>Chess OR Photos OR RYO (Roll Your Own)</h2>
+<h3>Posted Fri, Apr 12<br>
+Due Wed, May 8, 11 PM in BitBucket<br>
+</h3>
+<h3>Worth 200 points (20% of course grade)</h3>
+</center>
+<hr>
+You will continue working in pairs. If you choose to roll your own
+project, you must get approval from
+your grader - see the RYO section at the bottom of this page.
+
+<p><font color="red">You MUST use Git/Bitbucket to manage your
+repository. Your app MUST run correcty on the Nexus 4 (4.7 inch,
+768x1280, xhdpi) device emulator that comes with Android Studio.
+Make sure your app runs on Android API Level 28 (Android 9.0 - Pie)
+(This API level SDK comes pre-installed with the Android Studio download).
+We will test only for this level. 
+</font>
+
+</p><p>You may serialize the data used in your app,
+but are not required to do so - you can use alternative formats for storage on the
+device. 
+
+</p><hr>
+<h2>Photos</h2>
+
+<p>
+You are not required to carry over all the functionality from the Java FX implementation. 
+Instead, you will implement a smaller set, as described below. You may reuse any of the
+code from your Java FX project.
+</p>
+
+<p>
+Since the app will run on a personal smart phone, there is only a single user, who is the 
+owner of the phone. So there is no logging in, and no admin functionality. Also, 
+explicit captions are
+not required for photos (the filename will stand for the caption). 
+Dates are not required either.
+</p>
+<p>
+    
+</p>
+
+<h4>Your app should implement the following features:</h4>
+
+<ul>
+<p></p><li><span class="pts">30 pts</span> Home screen. When the app comes up, it should load album and photo
+data from the previous session, if any, and list all albums with names in
+plain text.
+Off this "home" screen, you should be able to do the following, in one or more navigational
+steps.
+<p></p>
+<p></p></li><li><span class="pts">40 pts</span>  Open, create, delete, and rename albums as listed in the 
+Java FX project description. When opening an album, display all its photos, with 
+their thumbnail images.
+<p></p>
+<p></p></li><li><span class="pts">40 pts</span>  Once an album is open, you should be able to 
+add, remove, or display a photo.
+The photo display screen should include an option for a slideshow,
+allowing you to go backward or forward in the album one photo at a time with
+manual controls.
+<p></p>
+<p></p></li><li><span class="pts">20 pts</span>  When a photo is displayed,
+you should be able to add a tag to a photo.
+Only person and location are valid tag types; there are
+no typeless tags. You should also be able to delete a tag from a photo.
+Note: When displaying a photo, tags (if any) should be visible.
+<p></p>
+<p></p></li><li><span class="pts">20 pts</span>  You should be able to move a photo from one album to another
+<p></p>
+<p></p></li><li><span class="pts">50 pts</span> You should be able to
+search for photos by tag (person and/or location), and matches should allow
+completion. For instance, if a location "New" is typed, matches should
+include photos taken in New York, New Mexico, New Zealand, etc.
+Note: You are not required to implement functionality to add new tag types,
+or save the matching photos in an album.
+<p></p>
+</li></ul>
+
+
+<hr>
+
+<h2>Chess</h2>
+<p>
+Port the terminal-based Chess program to Android: a chess app that lets two 
+people play chess with each other on the phone. You may reuse any code from your 
+chess assignment. You have to implement all the moves for all the
+pieces, determination of check, checkmate, and illegal moves (<em>including any
+that puts the mover's King in check</em>), but you are not required to implement
+stalemate.
+</p>
+<p>
+Your app implement the following:
+</p>
+
+<h3>Playing chess (120 pts)</h3>
+
+<li><span class="pts">30 pts</span> Two humans can use your app to play a game of Chess.
+
+<p></p></li><li><span class="pts">20 pts</span> Your app must draw the board with icons and correctly shaded squares.
+
+<p></p></li><li><span class="pts">20 pts</span> Players must move their pieces using touch input - either dragging a piece or touching first the piece's original square and then its destination.
+<p></p></li><li><span class="pts">10 pts</span> Provide an 'undo' function that will undo the last move (but no farther).
+<p></p></li><li><span class="pts">10 pts</span> Provide an 'AI' button that will choose a move for the current player. Choosing randomly from the set of legal moves is sufficient.
+<p></p></li><li><span class="pts">20 pts</span> Provide functional 'draw' and 'resign' buttons.
+<p></p></li><li><span class="pts">10 pts</span> When the game is over, report the outcome.
+
+<h3>Recording games (50 pts)</h3>
+
+</li><li><span class="pts">20 pts</span> Record all games as they're being played.
+
+<p></p></li><li><span class="pts">10 pts</span> At the conclusion of a game, offer to store it and prompt the user for a game title.
+<p></p></li><li><span class="pts">20 pts</span> List all recorded games, sorted by both date and by title (user can select which view to choose).
+
+<h3>Game playback (30 pts)</h3>
+
+</li><li>A function that allows the user to play a selected recorded game. The selected game should be
+playable one move at a time, per player.
+
+<hr>
+
+<h2>RYO</h2>
+
+<p>You need to get approval from your grader. For this, you will need to provide
+the following to them:
+
+</p><ul>
+<li>A short description of the app
+</li><li>A detailed description of all features
+</li><li>A storyboard of all activities that will be displayed to the user.
+</li></ul>
+
+<p>Depending on this, you may be asked to expand/shrink/modify the features (so there is
+sufficient breadth and depth, but not so much that you can't finish the project on time),
+before final approval. Also keep in mind if there is server set up required, you (NOT
+your grader) will be responsible for doing it yourself.
+
+</p><p><font size="+2">If you plan to go this route, start planning early so you can get approval 
+with enough time left to build!!</font>
+
+
+
+</p></li></body></html>
